@@ -1,10 +1,39 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <div>
+      <div v-if="!isLoggedIn">
+        <login @login-success="handleLoginSuccess" />
+      </div>
+
+      <div v-else>
+        <h1>Bienvenido, {{ usuario }}!</h1>
+      </div>
+    </div>
+  </div>
 </template>
+
+<script>
+import Login from './components/Login.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Login,
+  },
+  data() {
+    return {
+      isLoggedIn: false,
+      usuario: ''
+    };
+  },
+  methods: {
+    handleLoginSuccess(usuario) {
+      this.isLoggedIn = true;
+      this.usuario = usuario;
+    },
+  },
+};
+</script>
 
 <style>
 #app {
@@ -13,10 +42,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
 }
 
 nav a {
