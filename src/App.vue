@@ -16,7 +16,7 @@
 
 <script>
 import Login from './components/Login.vue';
-import { useAuthStore } from './stores/auth.js';
+import { useAuthStore } from './store/auth.js';
 
 export default {
   name: 'App',
