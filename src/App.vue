@@ -23,11 +23,15 @@ export default {
   components: {
     Login,
   },
-  data() {
-    return {
-      userLogeado: false,
-      usuario: ''
-    };
+  computed: {
+    userLogeado() {
+      const authStore = useAuthStore();
+      return authStore.userLogeado;
+    },
+    usuario() {
+      const authStore = useAuthStore();
+      return authStore.usuario;
+    },
   },
   methods: {
     sesionIniciada(usuario) {
