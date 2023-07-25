@@ -1,8 +1,10 @@
 <template>
   <div>
+    <nav></nav>
+
     <div>
-      <div v-if="!isLoggedIn">
-        <login @login-success="handleLoginSuccess" />
+      <div v-if="!userLogeado">
+        <Login @login-exitoso="sesionIniciada"></Login>
       </div>
 
       <div v-else>
@@ -14,6 +16,7 @@
 
 <script>
 import Login from './components/Login.vue';
+import { useAuthStore } from './stores/auth.js';
 
 export default {
   name: 'App',
@@ -22,14 +25,14 @@ export default {
   },
   data() {
     return {
-      isLoggedIn: false,
+      userLogeado: false,
       usuario: ''
     };
   },
   methods: {
-    handleLoginSuccess(usuario) {
-      this.isLoggedIn = true;
-      this.usuario = usuario;
+    sesionIniciada(usuario) {
+      const authStore = useAuthStore();
+      authStore.login(usuario);
     },
   },
 };
