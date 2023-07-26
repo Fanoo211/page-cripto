@@ -1,8 +1,13 @@
 <template>
   <div>
-    <nav>
-      <button type="button" class="btn waves-effect waves-light" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión<i class="material-icons right">exit_to_app</i></button>
-    </nav>
+  <nav class="orange darken-1">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Logo</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="waves-effect waves-light btn red accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
+      </ul>
+    </div>
+  </nav>
 
     <div>
       <div v-if="!userLogeado">
@@ -41,19 +46,24 @@ export default {
       const alphanumericRegex = /^[a-zA-Z0-9]+$/; //https://www.globalnerdy.com/wp-content/uploads/2022/01/regex-fright.jpg
 
       if (!usuario.trim()) {
-        alert('Por favor, ingrese un usuario válido.');
+        this.mostrarToast('Por favor, ingrese un usuario válido.', 'blue darken-1');
       } else if (!alphanumericRegex.test(usuario)) {
-        alert('El usuario debe contener solo letras y números.');
+        this.mostrarToast('El usuario debe contener solo letras y números.', 'blue darken-1');
       } else {
         const authStore = useAuthStore();
         authStore.login(usuario);
-        M.toast({ html: '¡SESIÓN INICIADA!' });
+        this.mostrarToast('¡SESIÓN INICIADA!', 'green accent-4');
+        
       }
     },
-  cerrarSesion() {
+    cerrarSesion() {
       const authStore = useAuthStore();
       authStore.logout();
-      M.toast({html: '¡SESIÓN CERRADA!'});
+      this.mostrarToast('¡SESIÓN CERRADA!', 'red accent-4');
+    },
+    mostrarToast(mensaje, color) {
+      M.Toast.dismissAll();
+      M.toast({ html: mensaje, classes: `${color}` });
     },
   },
 };
@@ -68,5 +78,9 @@ export default {
   color: #2c3e50;
 }
 
-
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
 </style>

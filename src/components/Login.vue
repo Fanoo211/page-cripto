@@ -13,7 +13,7 @@
 
           <div class="row">
             <div class="col s12">
-              <button type="submit" class="btn waves-effect waves-light">INICIAR SESIÓN<i class="material-icons right">input</i></button>
+              <button type="submit" class="btn waves-effect waves-light green accent-4">INICIAR SESIÓN<i class="material-icons right">input</i></button>
             </div>
           </div>
         </form>
@@ -47,10 +47,37 @@ export default{
   margin-bottom: 20px;
 }
 
-/* Personalización del botón de iniciar sesión */
 .btn {
   background-color: #00796B;
   color: #fff;
   border-radius: 5px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 }
+
+  /* label color */
+
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: black !important;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid black !important;
+     box-shadow: 0 1px 0 0 black !important;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid black !important;
+     box-shadow: 0 1px 0 0 black !important;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid black !important;
+     box-shadow: 0 1px 0 0 black !important;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: black !important;
+   }
+   
 </style>
