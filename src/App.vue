@@ -9,6 +9,7 @@
 
       <div v-else>
         <h1>Bienvenido, {{ usuario }}!</h1>
+        <button type="button" @click="cerrarSesion">Cerrar Sesión</button>
       </div>
     </div>
   </div>
@@ -17,6 +18,7 @@
 <script>
 import Login from './components/Login.vue';
 import { useAuthStore } from './store/auth.js';
+import M from 'materialize-css'
 
 export default {
   name: 'App',
@@ -37,6 +39,11 @@ export default {
     sesionIniciada(usuario) {
       const authStore = useAuthStore();
       authStore.login(usuario);
+    },
+  cerrarSesion() {
+      const authStore = useAuthStore();
+      authStore.logout();
+      M.toast({html: '¡SESIÓN CERRADA!'});
     },
   },
 };

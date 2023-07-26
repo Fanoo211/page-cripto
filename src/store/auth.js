@@ -9,7 +9,6 @@ export const useAuthStore = defineStore('auth', {
     login(usuario) {
       this.userLogeado = true;
       this.usuario = usuario;
-      console.log('Pene');
     },
     logout() {
       this.userLogeado = false;

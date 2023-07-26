@@ -24,21 +24,21 @@
 
 
 <script>
-  import M from 'materialize-css'
-  export default{
-      name: 'LoginForm',
-      data(){
-        return{
-          usuario: ''
-        }
-      },
-      methods: {
-        async iniciarSesion(){
-          this.$emit('login-exitoso', this.usuario);
-          M.toast({html: '¡SESIÓN INICIADA!'});
-        }
+import M from 'materialize-css'
+export default{
+    name: 'LoginForm',
+    data(){
+      return{
+        usuario: ''
       }
-  }
+    },
+    methods: {
+      async iniciarSesion(){
+        this.$emit('login-exitoso', this.usuario);
+        M.toast({html: '¡SESIÓN INICIADA!'});
+      }
+    }
+}
 </script>
 
 <style>
