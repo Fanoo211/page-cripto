@@ -1,6 +1,8 @@
 <template>
   <div>
-    <nav></nav>
+    <nav>
+      <button type="button" class="btn waves-effect waves-light" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión<i class="material-icons right">exit_to_app</i></button>
+    </nav>
 
     <div>
       <div v-if="!userLogeado">
@@ -9,7 +11,6 @@
 
       <div v-else>
         <h1>Bienvenido, {{ usuario }}!</h1>
-        <button type="button" @click="cerrarSesion">Cerrar Sesión</button>
       </div>
     </div>
   </div>
@@ -37,8 +38,17 @@ export default {
   },
   methods: {
     sesionIniciada(usuario) {
-      const authStore = useAuthStore();
-      authStore.login(usuario);
+      const alphanumericRegex = /^[a-zA-Z0-9]+$/; //https://www.globalnerdy.com/wp-content/uploads/2022/01/regex-fright.jpg
+
+      if (!usuario.trim()) {
+        alert('Por favor, ingrese un usuario válido.');
+      } else if (!alphanumericRegex.test(usuario)) {
+        alert('El usuario debe contener solo letras y números.');
+      } else {
+        const authStore = useAuthStore();
+        authStore.login(usuario);
+        M.toast({ html: '¡SESIÓN INICIADA!' });
+      }
     },
   cerrarSesion() {
       const authStore = useAuthStore();
@@ -58,12 +68,5 @@ export default {
   color: #2c3e50;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

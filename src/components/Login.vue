@@ -5,7 +5,7 @@
         <form @submit.prevent="iniciarSesion" class="center-align">
           <div class="row">
             <div class="input-field col s12">
-              <i class="material-icons prefix">person</i>
+              <i class="material-icons prefix">account_circle</i>
               <input id="usuario" type="text" class="validate" v-model="usuario">
               <label for="usuario">Usuario</label>
             </div>
@@ -13,7 +13,7 @@
 
           <div class="row">
             <div class="col s12">
-              <button type="submit" class="btn waves-effect waves-light">INICIAR SESIÓN<i class="material-icons right">security</i></button>
+              <button type="submit" class="btn waves-effect waves-light">INICIAR SESIÓN<i class="material-icons right">input</i></button>
             </div>
           </div>
         </form>
@@ -24,18 +24,18 @@
 
 
 <script>
-import M from 'materialize-css'
+//import M from 'materialize-css'
 export default{
     name: 'LoginForm',
     data(){
       return{
-        usuario: ''
+        usuario: '',
+        toastInstance: null
       }
     },
     methods: {
       async iniciarSesion(){
         this.$emit('login-exitoso', this.usuario);
-        M.toast({html: '¡SESIÓN INICIADA!'});
       }
     }
 }
