@@ -7,7 +7,8 @@
         <li><a class="waves-effect waves-light btn red accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
       </ul>
       <ul v-if="userLogeado" class="left hide-on-med-and-down">
-        <li><a href="#!">Compra-Venta</a></li>
+        <li><router-link to="/home">Home</router-link></li>
+        <li><router-link to="/compra-venta">Compra-Venta</router-link></li>
         <li><a href="#!">Movimientos</a></li>
         <li><a href="#!">Estado Actual</a></li>
       </ul>
@@ -18,9 +19,8 @@
       <div v-if="!userLogeado">
         <Login @login-exitoso="sesionIniciada"></Login>
       </div>
-
       <div v-else>
-        <h1>Bienvenido, {{ usuario }}!</h1>
+        
       </div>
     </div>
   </div>
