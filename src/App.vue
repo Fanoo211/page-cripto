@@ -2,9 +2,14 @@
   <div>
   <nav class="orange darken-1">
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Logo</a>
+      <a href="#!" class="brand-logo center">Logo</a>
       <ul class="right hide-on-med-and-down">
         <li><a class="waves-effect waves-light btn red accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
+      </ul>
+      <ul v-if="userLogeado" class="left hide-on-med-and-down">
+        <li><a href="#!">Compra-Venta</a></li>
+        <li><a href="#!">Movimientos</a></li>
+        <li><a href="#!">Estado Actual</a></li>
       </ul>
     </div>
   </nav>
