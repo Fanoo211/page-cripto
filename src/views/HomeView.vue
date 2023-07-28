@@ -5,7 +5,15 @@
 </template>
 
 <script>
+import { useAuthStore } from '../store/auth.js';
+
 export default {
   name: 'HomeView',
+  computed: {
+    usuario() {
+      const authStore = useAuthStore();
+      return authStore.usuario;
+    }
+  },
 }
 </script>
