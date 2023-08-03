@@ -83,8 +83,7 @@ export default {
 /* Estilos para el cuerpo de la página */
 body {
   /* Ajusta la imagen de fondo con el siguiente formato: */
-  background-image: url('');
-  background-color: aquamarine;
+  background-image: url('../src/assets/fondo4.jpg');
   /* Ajusta la forma en que se muestra la imagen */
   background-size: cover; /* La imagen cubrirá todo el contenedor */
   background-position: center; /* Centra la imagen vertical y horizontalmente */

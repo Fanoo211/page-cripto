@@ -3,13 +3,13 @@
     <a class="dropdown-trigger valign-wrapper" href="#" data-target="dropdown1">Transacciones <span class="material-symbols-outlined right icon-spacing">currency_exchange</span></a>
     <ul id="dropdown1" class="dropdown-content">
       <li>
-        <router-link :to="{ name: 'CompraView' }" class="valign-wrapper">
+        <router-link :to="{ name: 'CompraView' }" class="valign-wrapper titles">
           Compra
           <span class="material-symbols-outlined right icon-spacing">attach_money</span> <!-- shopping_cart !-->
         </router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'VentaView' }" class="valign-wrapper">
+        <router-link :to="{ name: 'VentaView' }" class="valign-wrapper titles">
           Venta
           <span class="material-symbols-outlined right icon-spacing">sell</span>
         </router-link>
@@ -33,5 +33,13 @@ export default {
 <style scoped>
 .icon-spacing {
   margin-left: 12px;
+}
+
+.dropdown-content{
+  background-color: #FFB70C;
+}
+
+.titles{
+  color: #E92D1D;
 }
 </style>

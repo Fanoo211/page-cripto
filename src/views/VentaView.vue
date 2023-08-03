@@ -5,7 +5,7 @@
     <div class="row">
       <div class="input-field s6">    
         <h7 class="white-text">Vender:</h7>  
-        <select class="browser-default waves-effect waves-light btn" v-model="ventaSeleccionada">
+        <select class="browser-default" v-model="ventaSeleccionada">
           <option value="">Seleccione</option>
           <option v-for="(opcion, index) in opcionesVenta" :key="index" :value="opcion">{{ opcion }}</option>
         </select>

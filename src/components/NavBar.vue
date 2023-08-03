@@ -8,8 +8,8 @@
       <ul v-if="userLogeado" class="left hide-on-med-and-down">
         <li><router-link :to="{name: 'HomeView'}" class="valign-wrapper">Inicio<span class="material-symbols-outlined right icon-spacing">home</span></router-link></li>
         <li><DropdownMenu /></li>
-        <li><a href="#!" class="valign-wrapper">Movimientos <span class="material-symbols-outlined right icon-spacing">swap_horiz</span></a></li>
-        <li><a href="#!" class="valign-wrapper">Estado Actual <span class="material-symbols-outlined right icon-spacing">info</span></a></li>
+        <li><router-link :to="{name: 'MovimientosView'}" class="valign-wrapper">Movimientos<span class="material-symbols-outlined right icon-spacing">swap_horiz</span></router-link></li>
+        <li><router-link :to="{name: 'EstadoActualView'}" class="valign-wrapper">Estado Actual<span class="material-symbols-outlined right icon-spacing">info</span></router-link></li>
       </ul>
     </div>
   </nav>
@@ -46,7 +46,7 @@ export default{
 
 <style scoped>
 .nav-bar {
-  background-color: #E92D1D;
+  background-color: #E92D1D; /*Pomegranate*/
 }
 
 .icon-spacing {
