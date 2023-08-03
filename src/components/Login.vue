@@ -5,8 +5,8 @@
         <form @submit.prevent="iniciarSesion" class="center-align">
           <div class="row">
             <div class="input-field col s12">
-              <i class="material-icons prefix">account_circle</i>
-              <input id="usuario" type="text" class="validate" v-model="usuario">
+              <i class="material-icons prefix white-text">account_circle</i>
+              <input id="usuario" type="text" class="validate white" v-model="usuario">
               <label for="usuario">Usuario</label>
             </div>
           </div>
@@ -58,26 +58,26 @@ export default{
 
    /* label focus color */
    .input-field input[type=text]:focus + label {
-     color: black !important;
+     color: #ffffff !important;
    }
    /* label underline focus color */
    .input-field input[type=text]:focus {
-     border-bottom: 1px solid black !important;
-     box-shadow: 0 1px 0 0 black !important;
+     border-bottom: 1px solid #ffffff !important;
+     box-shadow: 0 1px 0 0 #ffffff !important;
    }
    /* valid color */
    .input-field input[type=text].valid {
-     border-bottom: 1px solid black !important;
-     box-shadow: 0 1px 0 0 black !important;
+     border-bottom: 1px solid #ffffff !important;
+     box-shadow: 0 1px 0 0 #ffffff !important;
    }
    /* invalid color */
    .input-field input[type=text].invalid {
-     border-bottom: 1px solid black !important;
-     box-shadow: 0 1px 0 0 black !important;
+     border-bottom: 1px solid #ffffff !important;
+     box-shadow: 0 1px 0 0 #ffffff !important;
    }
    /* icon prefix focus color */
    .input-field .prefix.active {
-     color: black !important;
+     color: #ffffff !important;
    }
    
 </style>

@@ -1,20 +1,9 @@
 <template>
   <div>
-  <nav class="orange darken-1">
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo center">Logo</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a class="waves-effect waves-light btn red accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
-      </ul>
-      <ul v-if="userLogeado" class="left hide-on-med-and-down">
-        <li><router-link :to="{name: 'HomeView'}">Home</router-link></li>
-        <li><router-link :to="{name: 'CompraVentaView'}">Compra-Venta</router-link></li>
-        <li><a href="#!">Movimientos</a></li>
-        <li><a href="#!">Estado Actual</a></li>
-      </ul>
-    </div>
-  </nav>
 
+    <NavBar />
+
+  <main style="min-height: calc(100vh - 130px);">
     <div>
       <div v-if="!userLogeado">
         <Login @login-exitoso="sesionIniciada"></Login>
@@ -23,11 +12,17 @@
         <router-view></router-view>
       </div>
     </div>
+  </main>
+    
+  <Footer />
+
   </div>
 </template>
 
 <script>
 import Login from './components/Login.vue';
+import NavBar from './components/NavBar.vue';
+import Footer from './components/Footer.vue';
 import { useAuthStore } from './store/auth.js';
 import M from 'materialize-css'
 
@@ -35,6 +30,8 @@ export default {
   name: 'App',
   components: {
     Login,
+    NavBar,
+    Footer
   },
   computed: {
     userLogeado() {
@@ -83,9 +80,15 @@ export default {
   color: #2c3e50;
 }
 
-.nav-bar {
-  display: flex;
-  align-items: center;
-  justify-content: right;
+/* Estilos para el cuerpo de la página */
+body {
+  /* Ajusta la imagen de fondo con el siguiente formato: */
+  background-image: url('');
+  background-color: aquamarine;
+  /* Ajusta la forma en que se muestra la imagen */
+  background-size: cover; /* La imagen cubrirá todo el contenedor */
+  background-position: center; /* Centra la imagen vertical y horizontalmente */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
+
 </style>
