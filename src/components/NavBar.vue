@@ -6,10 +6,10 @@
         <li><a class="waves-effect waves-light btn red accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
       </ul>
       <ul v-if="userLogeado" class="left hide-on-med-and-down">
-        <li><router-link :to="{name: 'HomeView'}"><i class="material-icons right">home</i>Home</router-link></li>
+        <li><router-link :to="{name: 'HomeView'}" class="valign-wrapper">Inicio<span class="material-symbols-outlined right icon-spacing">home</span></router-link></li>
         <li><DropdownMenu /></li>
-        <li><a href="#!"><i class="material-icons right">list</i>Movimientos</a></li>
-        <li><a href="#!" class="valign-wrapper">Estado Actual <span class="material-symbols-outlined right icon-spacing">currency_exchange</span></a></li>
+        <li><a href="#!" class="valign-wrapper">Movimientos <span class="material-symbols-outlined right icon-spacing">swap_horiz</span></a></li>
+        <li><a href="#!" class="valign-wrapper">Estado Actual <span class="material-symbols-outlined right icon-spacing">info</span></a></li>
       </ul>
     </div>
   </nav>
@@ -50,6 +50,6 @@ export default{
 }
 
 .icon-spacing {
-  margin-left: 13px;
+  margin-left: 12px;
 }
 </style>
