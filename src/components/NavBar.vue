@@ -3,7 +3,7 @@
     <div class="nav-wrapper">
       <a href="#!" class="brand-logo center">Logo</a>
       <ul class="right hide-on-med-and-down">
-        <li><a class="waves-effect waves-light btn red accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
+        <li><a class="waves-effect waves-light btn white red-text accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
       </ul>
       <ul v-if="userLogeado" class="left hide-on-med-and-down">
         <li><router-link :to="{name: 'HomeView'}" class="valign-wrapper">Inicio<span class="material-symbols-outlined right icon-spacing">home</span></router-link></li>

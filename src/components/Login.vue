@@ -62,17 +62,17 @@ export default{
    }
    /* label underline focus color */
    .input-field input[type=text]:focus {
-     border-bottom: 1px solid #ffffff !important;
+     border-bottom: 1px solid gainsboro !important;
      box-shadow: 0 1px 0 0 #ffffff !important;
    }
    /* valid color */
    .input-field input[type=text].valid {
-     border-bottom: 1px solid #ffffff !important;
+     border-bottom: 1px solid gainsboro !important;
      box-shadow: 0 1px 0 0 #ffffff !important;
    }
    /* invalid color */
    .input-field input[type=text].invalid {
-     border-bottom: 1px solid #ffffff !important;
+     border-bottom: 1px solid gainsboro !important;
      box-shadow: 0 1px 0 0 #ffffff !important;
    }
    /* icon prefix focus color */

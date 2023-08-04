@@ -1,4 +1,5 @@
 <template>
+<div class="container">
   <div class="container rounded white">
     <h3 class="center-align">Ejemplo con MaterializeCSS</h3>
     <div class="row">
@@ -7,19 +8,20 @@
           <option value="" disabled>Seleccione una opción</option>
           <option v-for="(opcion, index) in opciones" :key="index" :value="opcion">{{ opcion }}</option>
         </select>
-        
-      </div>
-      <div class="input-field col s6">
+
+
         <input type="text" v-model="textoInput">
-        <label>Texto de entrada</label>
       </div>
-    </div>
+
     <div class="row center-align">
       <div class="col s12">
         <button class="waves-effect waves-light btn" @click="hacerAlgo">Hacer algo</button>
       </div>
     </div>
   </div>
+  </div>
+</div>
+
 </template>
 
 <script>

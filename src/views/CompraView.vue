@@ -3,8 +3,8 @@
   <div class="row">
     <div class="input-field s6">
       <h1>Compra</h1>  
-      <h7 class="black-text">Comprar:</h7> 
-      <select class="browser-default" v-model="compraSeleccionada">
+      <h7 class="black-text">Cripto:</h7> 
+      <select class="browser-default custom-select" v-model="compraSeleccionada">
         <option value="" disabled="" selected="">Seleccione</option>
         <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
       </select>
@@ -17,20 +17,26 @@
   <div class="card blue-grey darken-1">
     <div class="card-content white-text">
       <span class="card-title">Precio en ARS</span>
-      <p>{{ precioARS }}</p>
+      <p>${{ precioARS }}</p>
     </div>
   </div>
+  <button class="waves-effect waves-light btn yellow darken-3">Comprar</button>
 </div>
-
-
 </template>
 
 
 <script>
 import axios from 'axios';
+import { useAuthStore } from '../store/auth.js';
 
 export default {
   name: 'CompraView',
+  computed: {
+    usuario() {
+      const authStore = useAuthStore();
+      return authStore.usuario;
+    }
+  },
   data() {
     return {
       opcionesCompra: ['BTC' , 'DAI' , 'ETH' , 'USDT'],
@@ -71,21 +77,27 @@ export default {
   box-sizing: border-box;
 }
 
+
 .browser-default{
   background-color: #FFB70C;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
-
-.title-text{
-  font-family: 'Noto Sans', sans-serif;
-  color: white;
-}
-
 
 .custom-container {
   max-width: 600px;
   margin-left: 10px;
-  margin-right: auto;
-  margin-top: 70px;
+  margin-top: 50px;
+  padding: 20px;
+  padding-top: 0px;
+  border-radius: 5px;
+}
+
+.custom-select{
+  font-family: Avenir, Helvetica, Arial, sans-serif;;
 }
 
 </style>
