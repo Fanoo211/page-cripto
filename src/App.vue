@@ -24,7 +24,7 @@ import Login from './components/Login.vue';
 import NavBar from './components/NavBar.vue';
 import Footer from './components/Footer.vue';
 import { useAuthStore } from './store/auth.js';
-import M from 'materialize-css'
+import M from 'materialize-css';
 
 export default {
   name: 'App',

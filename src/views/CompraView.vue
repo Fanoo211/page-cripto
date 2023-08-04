@@ -3,14 +3,14 @@
   <div class="row">
     <div class="input-field s6">
       <h1>Compra</h1>  
-      <h7 class="black-text">Cripto:</h7> 
+      
       <select class="browser-default custom-select" v-model="compraSeleccionada">
         <option value="" disabled="" selected="">Seleccione</option>
         <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
       </select>
     </div>
     <div class="input-field s6">
-      <h7 class="black-text">Cantidad:</h7>
+      
       <input type="number" v-model="cantidad" min="1" step="1" class="browser-default">
     </div>
   </div>
@@ -20,14 +20,15 @@
       <p>${{ precioARS }}</p>
     </div>
   </div>
-  <button class="waves-effect waves-light btn yellow darken-3">Comprar</button>
+  <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
 </div>
 </template>
 
 
 <script>
-import axios from 'axios';
 import { useAuthStore } from '../store/auth.js';
+import axios from '../conexionAPI.js';
+import M from 'materialize-css';
 
 export default {
   name: 'CompraView',
@@ -61,6 +62,40 @@ export default {
       } catch (error) {
         console.error('Error al obtener el precio en ARS:', error);
         this.precioARS = 0;
+      }
+    },
+    async comprar() {
+      if (this.cantidad > 0 && this.precioARS > 0) {
+        const datetime = new Date().toISOString();
+
+        const datos = {
+          user_id: this.usuario,
+          action: 'purchase',
+          crypto_code: this.compraSeleccionada,
+          crypto_amount: this.cantidad.toString(),
+          money: this.precioARS.toString(),
+          datetime: datetime,
+        };
+
+        try {
+          const response = await axios.post('https://laboratorio-36cf.restdb.io/rest/transactions', datos, {
+            headers: {
+              'Authorization': '64a5ccf686d8c5d256ed8fce',
+            },
+          });
+
+          if (response.data.success) {
+            M.toast({ html: '¡Compra guardada correctamente!', classes: 'green accent-4' });
+          } else {
+            M.toast({ html: 'Error al guardar la compra', classes: 'red accent-4' });
+            console.log(datos);
+          }
+        } catch (error) {
+          M.toast({ html: 'Error en la solicitud a la API', classes: 'red accent-4' });
+          console.error(error);
+        }
+      } else {
+        M.toast({ html: 'La cantidad de criptomoneda y el dinero gastado deben ser mayores a 0', classes: 'red accent-4' });
       }
     },
   },
