@@ -34,9 +34,10 @@ export default{
 
 <style scoped>
 .page-footer{
- background-color: #E92D1D;
+  background-color: #F8BA00;
+  font-size: 18px;
+  color: white;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
 }
-.footer-copyright{
-  background-color: #CF1709;
-}
+
 </style>

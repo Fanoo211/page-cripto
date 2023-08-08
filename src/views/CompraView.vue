@@ -71,18 +71,14 @@ export default {
         const datos = {
           user_id: this.usuario,
           action: 'purchase',
-          crypto_code: this.compraSeleccionada,
+          crypto_code: this.compraSeleccionada.toLowerCase(),
           crypto_amount: this.cantidad.toString(),
           money: this.precioARS.toString(),
           datetime: datetime,
         };
 
         try {
-          const response = await axios.post('https://laboratorio-36cf.restdb.io/rest/transactions', datos, {
-            headers: {
-              'Authorization': '64a5ccf686d8c5d256ed8fce',
-            },
-          });
+          const response = await axios.post('https://laboratorio3-f36a.restdb.io/rest/transactions', datos);
 
           if (response.data.success) {
             M.toast({ html: '¡Compra guardada correctamente!', classes: 'green accent-4' });
