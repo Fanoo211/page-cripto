@@ -31,8 +31,8 @@ export default{
     const authStore = useAuthStore();
     return authStore.usuario;
   },
-  mounted(){
-    this.mostrarMovimientos();
+  watch: {
+    movimientos: 'mostrarMovimientos'
   },
   methods: {
     async mostrarMovimientos(){

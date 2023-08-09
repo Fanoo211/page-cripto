@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="white-text">Bienvenido, {{ usuario }}!</h1>
+    <h1 class="text">Bienvenido, {{ usuario }}!</h1>
   </div>
 </template>
 
@@ -17,3 +17,17 @@ export default {
   },
 }
 </script>
+
+
+<style scoped>
+@font-face {
+  font-family: 'Vercetti Regular';
+  src: url('~@/assets/fonts/Vercetti-Regular.otf') format('otf'), /* Ruta relativa al archivo de tipografía */
+       /* Agrega más formatos si es necesario */
+}
+
+.text{
+  font-family: 'Vercetti Regular';
+  font-size: 100px;
+}
+</style>

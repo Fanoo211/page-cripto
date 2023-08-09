@@ -79,6 +79,7 @@ export default {
 
         try {
           const response = await axios.post('https://laboratorio3-f36a.restdb.io/rest/transactions', datos);
+          
 
           if (response.data.success) {
             M.toast({ html: '¡Compra guardada correctamente!', classes: 'green accent-4' });
