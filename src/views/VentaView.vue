@@ -1,5 +1,5 @@
 <template>
-<div class="container white left custom-container">
+<div class="container left custom-container">
   <div class="row">
     <div class="input-field s6">
       <h1>Venta</h1>  
