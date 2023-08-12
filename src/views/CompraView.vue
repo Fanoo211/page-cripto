@@ -83,6 +83,10 @@ export default {
         this.precioARS = 0;
       }
     },
+    mostrarToast(mensaje, color) {
+      M.Toast.dismissAll();
+      M.toast({ html: mensaje, classes: `${color}` });
+    },
     async comprar() {
       if (this.cantidad > 0 && this.precioARS > 0) {
         const datetime = new Date().toISOString();
@@ -105,16 +109,16 @@ export default {
           })
 
           if(response.status === 201){
-            M.toast({ html: '¡Compra guardada correctamente!', classes: 'green accent-4' });
-            console.log(datos);
+            this.mostrarToast('¡Compra guardada correctamente!', 'green accent-4');
+            console.log(response.data);
           }
             
         } catch (error) {
-          M.toast({ html: 'Error en la solicitud a la API', classes: 'red accent-4' });
+          this.mostrarToast('Error en la solicitud a la API', 'red accent-4');
           console.error(error);
         }
       } else {
-        M.toast({ html: 'La cantidad de criptomoneda y el dinero gastado deben ser mayores a 0', classes: 'red accent-4' });
+        this.mostrarToast('La cantidad de criptomoneda y el dinero gastado deben ser mayores a 0', 'red accent-4');
       }
     },
   },

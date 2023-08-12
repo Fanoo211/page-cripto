@@ -24,6 +24,9 @@
           </tr>
         </tbody>
       </table>
+      <div v-if="cargando" class="center-align">
+        <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
+      </div>
     </div>
   </div>
 
@@ -39,6 +42,7 @@ export default{
   data(){
     return{
       movimientos: [],
+      cargando: false,
     }
   },
   computed: {
@@ -55,6 +59,7 @@ export default{
       let user_id = this.usuario
 
       try {
+        this.cargando = true;
         const response = await axios.get(`https://laboratorio3-f36a.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
         headers: {
           'x-apikey': '60eb09146661365596af552f',
@@ -66,6 +71,8 @@ export default{
       }
       catch(error) {
         console.error('Error al obtener las transacciones:', error);
+      } finally{
+        this.cargando = false;
       }
     }
   }

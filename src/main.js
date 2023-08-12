@@ -4,6 +4,7 @@ import { createPinia } from 'pinia';
 import App from './App.vue'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
+import 'animate.css'
 import router from './router'
 import store from './store'
 import axios from 'axios'
