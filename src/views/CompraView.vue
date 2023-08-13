@@ -1,46 +1,27 @@
 <template>
-  <div class="container left custom-container">
-    <div class="row">
-      <div class="input-field s6">
-        <h1>Compra</h1>
-
-        <select
-          class="browser-default custom-select"
-          v-model="compraSeleccionada"
-        >
-          <option value="" disabled="" selected="">Seleccione</option>
-          <option
-            v-for="(opcion, index) in opcionesCompra"
-            :key="index"
-            :value="opcion"
-          >
-            {{ opcion }}
-          </option>
-        </select>
-      </div>
-      <div class="input-field s6">
-        <input
-          type="number"
-          v-model="cantidad"
-          min="1"
-          step="1"
-          class="browser-default"
-        />
-      </div>
+<div class="container left custom-container">
+  <div class="row">
+    <div class="input-field s6">
+      <h1>Compra</h1>
+      <p class="black-text">Cripto:</p> 
+      <select class="browser-default custom-select" v-model="compraSeleccionada">
+        <option value="" disabled="" selected="">Seleccione</option>
+        <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
+      </select>
     </div>
-    <div class="card blue-grey darken-1">
-      <div class="card-content white-text">
-        <span class="card-title">Precio en ARS</span>
-        <p>ARS {{ precioARS }}</p>
-      </div>
+    <div class="input-field s6">
+      <p class="black-text">Cantidad:</p>
+      <input type="number" v-model="cantidad" min="1" step="1" class="browser-default"/>
     </div>
-    <button
-      class="waves-effect waves-light btn yellow darken-3"
-      @click="comprar"
-    >
-      Comprar
-    </button>
   </div>
+  <div class="card blue-grey darken-1">
+    <div class="card-content white-text">
+      <span class="card-title">Precio en ARS</span>
+      <p>ARS {{ precioARS }}</p>
+    </div>
+  </div>
+  <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
+</div>
 </template>
 
 
@@ -110,7 +91,7 @@ export default {
 
           if(response.status === 201){
             this.mostrarToast('¡Compra guardada correctamente!', 'green accent-4');
-            console.log(response.data);
+            console.log(datos);
           }
             
         } catch (error) {
@@ -118,7 +99,7 @@ export default {
           console.error(error);
         }
       } else {
-        this.mostrarToast('La cantidad de criptomoneda y el dinero gastado deben ser mayores a 0', 'red accent-4');
+        this.mostrarToast('Seleccione criptomoneda y cantidad', 'red accent-4');
       }
     },
   },

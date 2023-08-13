@@ -3,32 +3,40 @@
   <div class="row">
     <div class="input-field s6">
       <h1>Venta</h1>  
-      <h7 class="black-text">Cripto:</h7> 
+      <p class="black-text">Cripto:</p> 
       <select class="browser-default custom-select" v-model="ventaSeleccionada">
         <option value="" disabled="" selected="">Seleccione</option>
         <option v-for="(opcion, index) in opcionesVenta" :key="index" :value="opcion">{{ opcion }}</option>
       </select>
     </div>
     <div class="input-field s6">
-      <h7 class="black-text">Cantidad:</h7>
+      <p class="black-text">Cantidad:</p>
       <input type="number" v-model="cantidad" min="1" step="1" class="browser-default">
     </div>
   </div>
   <div class="card blue-grey darken-1">
     <div class="card-content white-text">
       <span class="card-title">Precio en ARS</span>
-      <p>${{ precioARS }}</p>
+      <p>ARS {{ precioARS }}</p>
     </div>
   </div>
-  <button class="waves-effect waves-light btn yellow darken-3">Vender</button>
+  <button class="waves-effect waves-light btn yellow darken-3" @click="vender">Vender</button>
 </div>
 </template>
 
 <script>
+import { useAuthStore } from '@/store/auth';
 import axios from 'axios';
+import M from 'materialize-css';
 
 export default {
   name: 'VentaView',
+  computed: {
+    usuario() {
+      const authStore = useAuthStore();
+      return authStore.usuario;
+    }
+  },
   data() {
     return {
       opcionesVenta: ['BTC' , 'DAI' , 'ETH' , 'USDT'],
@@ -53,6 +61,44 @@ export default {
       } catch (error) {
         console.error('Error al obtener el precio en ARS:', error);
         this.precioARS = 0;
+      }
+    },
+    mostrarToast(mensaje, color) {
+      M.Toast.dismissAll();
+      M.toast({ html: mensaje, classes: `${color}` });
+    },
+    async vender() {
+      if (this.cantidad > 0 && this.precioARS > 0) {
+        const datetime = new Date().toISOString();
+
+        const datos = {
+          user_id: this.usuario,
+          action: 'sale',
+          crypto_code: this.ventaSeleccionada.toLowerCase(),
+          crypto_amount: this.cantidad.toString(),
+          money: this.precioARS.toString(),
+          datetime: datetime,
+        };
+
+        try {
+          const response = await axios.post('https://laboratorio3-f36a.restdb.io/rest/transactions', datos, {
+            headers: {
+              'x-apikey':'60eb09146661365596af552f',
+              'Content-Type': 'application/json'
+            },
+          })
+
+          if(response.status === 201){
+            this.mostrarToast('Venta guardada correctamente!', 'green accent-4');
+            console.log(datos);
+          }
+            
+        } catch (error) {
+          this.mostrarToast('Error en la solicitud a la API', 'red accent-4');
+          console.error(error);
+        }
+      } else {
+        this.mostrarToast('Seleccione criptomoneda y cantidad', 'red accent-4');
       }
     },
   },

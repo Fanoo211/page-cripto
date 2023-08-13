@@ -55,8 +55,9 @@ export default {
         const authStore = useAuthStore();
         authStore.login(usuario);
         this.mostrarToast('¡SESIÓN INICIADA!', 'green accent-4');
-        
       }
+
+      this.$router.push({ name: 'HomeView' });
     },
     cerrarSesion() {
       const authStore = useAuthStore();
