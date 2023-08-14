@@ -6,7 +6,7 @@
 
   <div class="row">
     <div class="col m12">
-      <div class="container">
+      <div class="container" v-if="tamañoMovimientos">
         <table class="table bordered striped">
           <thead>
             <tr>
@@ -29,7 +29,10 @@
           </tbody>
         </table>
       </div>
-      <div v-if="cargando" class="center-align">
+      <div class="container" v-else>
+        <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
+      </div>
+      <div v-if="cargando> 0" class="center-align">
         <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
       </div>
     </div>
@@ -68,7 +71,10 @@ export default{
     usuario() {
       const authStore = useAuthStore();
       return authStore.usuario;
-    }
+    },
+    tamañoMovimientos(){
+      return this.movimientos.length > 0;
+    },
   },
   mounted(){
     this.mostrarMovimientos();
@@ -87,7 +93,8 @@ export default{
         }
       });
         this.movimientos = response.data;
-        console.log(this.movimientos)
+        this.tamañoMovimientos = this.movimientos.length;
+        console.log(this.movimientos);
       } catch(error) {
         console.error('Error al obtener las transacciones:', error);
       } finally{
