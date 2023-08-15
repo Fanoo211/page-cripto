@@ -34,7 +34,7 @@ export default{
 
 <style scoped>
 .page-footer{
-  background-color: #F8BA00;
+  background-color: #002CEB;
   font-size: 18px;
   color: white;
   text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
