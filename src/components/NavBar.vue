@@ -2,21 +2,25 @@
   <nav class="nav-bar">
     <div class="nav-wrapper">
       <div>
-<a href="#!" class="brand-logo center">Logo</a>
+        <a href="#!" class="brand-logo center">
+          CriptoFano
+          <img src="../assets/logoPage.png" alt="logoPage" class="logo-page left">
+        </a>
+        
       </div>
 
       <div>
         <ul class="right hide-on-med-and-down">
-        <li><a class="waves-effect waves-light btn white red-text accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
-      </ul>
+          <li><a class="waves-effect waves-light btn white red-text accent-4" v-if="userLogeado" @click="cerrarSesion">Cerrar Sesión <i class="material-icons right">exit_to_app</i></a></li>
+        </ul>
       </div>
 
       <div class="page-views">
         <ul v-if="userLogeado" class="left hide-on-med-and-down">
-        <li><router-link :to="{name: 'HomeView'}" class="valign-wrapper" style="font-size: 18px">Inicio<span class="material-symbols-outlined right icon-spacing">home</span></router-link></li>
+        <li><router-link :to="{name: 'HomeView'}" class="valign-wrapper" style="font-size: 16px">Inicio<span class="material-symbols-outlined right icon-spacing">home</span></router-link></li>
         <li><DropdownMenu /></li>
-        <li><router-link :to="{name: 'MovimientosView'}" class="valign-wrapper" style="font-size: 18px">Movimientos<span class="material-symbols-outlined right icon-spacing">swap_horiz</span></router-link></li>
-        <li><router-link :to="{name: 'EstadoActualView'}" class="valign-wrapper" style="font-size: 18px">Estado Actual<span class="material-symbols-outlined right icon-spacing">info</span></router-link></li>
+        <li><router-link :to="{name: 'MovimientosView'}" class="valign-wrapper" style="font-size: 16px">Movimientos<span class="material-symbols-outlined right icon-spacing">swap_horiz</span></router-link></li>
+        <li><router-link :to="{name: 'EstadoActualView'}" class="valign-wrapper" style="font-size: 16px">Estado Actual<span class="material-symbols-outlined right icon-spacing">info</span></router-link></li>
       </ul>
       </div>
       
@@ -57,15 +61,24 @@ export default{
 
 <style scoped>
 .nav-bar {
-  background-color: #F8BA00; 
+  background-color: #002CEB; /*Dark Blue*/
 }
 
 .page-views {
   color: white;
-  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  /*text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;*/
 }
 
 .icon-spacing {
   margin-left: 12px;
+}
+
+.brand-logo {
+font-family: 'Dancing Script', cursive;
+}
+
+.logo-page {
+width: 60px;
+height: 60px;
 }
 </style>
