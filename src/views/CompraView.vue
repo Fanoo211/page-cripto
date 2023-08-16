@@ -17,7 +17,7 @@
   <div class="card blue-grey darken-1">
     <div class="card-content white-text">
       <span class="card-title">Precio en ARS</span>
-      <p>ARS {{ precioARS }}</p>
+      <p>ARS {{ precioARS.toFixed(2) }}</p>
     </div>
   </div>
   <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
@@ -77,7 +77,7 @@ export default {
           action: 'purchase',
           crypto_code: this.compraSeleccionada.toLowerCase(),
           crypto_amount: this.cantidad.toString(),
-          money: this.precioARS.toString(),
+          money: this.precioARS.toFixed(2),
           datetime: datetime,
         };
 
