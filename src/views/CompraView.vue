@@ -107,7 +107,8 @@ export default {
 
 </script>
 
-<style>
+
+<style scoped>
 .input-field input[type="number"] {
   border: 1px solid #ccc;
   padding: 8px;

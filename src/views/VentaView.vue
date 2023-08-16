@@ -105,7 +105,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .input-field input[type="number"] {
   border: 1px solid #ccc;
   padding: 8px;
@@ -114,4 +114,26 @@ export default {
   box-sizing: border-box;
 }
 
+.browser-default {
+  background-color: #ffb70c;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-container {
+  max-width: 600px;
+  margin-left: 10px;
+  margin-top: 50px;
+  padding: 20px;
+  padding-top: 0px;
+  border-radius: 5px;
+  background-color: orangered;
+}
+
+.custom-select {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
 </style>
