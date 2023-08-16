@@ -28,7 +28,7 @@
                 <a class="waves-effect waves-light btn red" @click="mostrarEliminar(movimiento)"><i class="material-icons">delete</i></a>
               </td>
               <td>
-                <a class="waves-effect waves-light btn lightblue" @click="mostrarModificar(movimiento.crypto_code.toUpperCase(), movimiento.crypto_amount)"><i class="material-icons">create</i></a>
+                <a class="waves-effect waves-light btn lightblue" @click="mostrarModificar(movimiento)"><i class="material-icons">create</i></a>
               </td>
             </tr>
           </tbody>
@@ -37,7 +37,7 @@
       <div class="container" v-else>
         <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
       </div>
-      <div v-if="cargando> 0" class="center-align">
+      <div v-if="cargando > 0" class="center-align">
         <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
       </div>
     </div>
@@ -73,13 +73,13 @@
       <div class="card blue-grey darken-1">
         <div class="card-content white-text">
           <span class="card-title">Precio en ARS</span>
-          <p>ARS {{ precioARS }}</p>
+          <p>ARS {{ precioARS.toFixed(2) }}</p>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-      <a class="modal-close waves-effect waves-red btn">Modificar</a>
+      <a class="modal-close waves-effect waves-red btn" @click="modificarMovimiento()">Modificar</a>
     </div>
   </div>
 
@@ -103,6 +103,7 @@ export default{
       criptoSeleccionada: '',
       cantidad: 0,
       precioARS: 0,
+      movimientoAModificar: null,
     }
   },
   computed: {
@@ -135,8 +136,9 @@ export default{
         }
       });
         this.movimientos = response.data;
-        this.tamañoMovimientos = this.movimientos.length;
+        //this.tamañoMovimientos = this.movimientos.length;
         console.log(this.movimientos);
+        
       } catch(error) {
         console.error('Error al obtener las transacciones:', error);
       } finally{
@@ -149,6 +151,10 @@ export default{
       }else if(action === 'sale'){
         return 'Venta'
       }
+    },
+    mostrarToast(mensaje, color) {
+      M.Toast.dismissAll();
+      M.toast({ html: mensaje, classes: `${color}` });
     },
     mostrarEliminar(movimiento) {
       this.movimientoAEliminar = movimiento;
@@ -165,22 +171,16 @@ export default{
           },
         });
 
-        const index = this.movimientos.indexOf(this.movimientoAEliminar);
-        if (index !== -1) {
-          this.movimientos.splice(index, 1);
-        }
-        
+        this.mostrarMovimientos();
+       this.mostrarToast('Registro eliminado correctamente!', 'green accent-4');
+
         console.log(response.data);
       } catch (error) {
         console.error('Error al eliminar el movimiento:', error);
+        this.mostrarToast('Error al eliminar el movimiento.', 'red accent-4');
       } finally {
         this.movimientoAEliminar = null;
       }
-    },
-    mostrarModificar(cripto, cantidad) {
-      M.Modal.getInstance(document.querySelector('#modal-modificar')).open();
-      this.criptoSeleccionada = cripto;
-      this.cantidad = cantidad;
     },
     async obtenerPrecioEnARS() {
       try {
@@ -195,6 +195,43 @@ export default{
         this.precioARS = 0;
       }
     },
+    mostrarModificar(movimiento) {
+      this.movimientoAModificar = movimiento;
+      M.Modal.getInstance(document.querySelector('#modal-modificar')).open();
+      this.criptoSeleccionada = movimiento.crypto_code.toUpperCase();
+      this.cantidad = movimiento.crypto_amount;
+    },
+    async modificarMovimiento(){
+      M.Modal.getInstance(document.querySelector('#modal-modificar')).close();
+        const datosNuevos = {
+        crypto_code: this.criptoSeleccionada.toLowerCase(),
+        crypto_amount: this.cantidad.toString(),
+        money: this.precioARS.toFixed(2),
+      };
+
+      console.log(datosNuevos);
+
+      try {
+        const response = await axios.patch(`https://laboratorio3-f36a.restdb.io/rest/transactions/${this.movimientoAModificar._id}`,
+        datosNuevos,
+        {
+          headers: {
+            'x-apikey': '60eb09146661365596af552f',
+            'Content-Type': 'application/json',          
+          }
+        });
+
+        console.log(response.data);
+        this.mostrarMovimientos();
+        this.mostrarToast('Registro modificado correctamente!', 'green accent-4');
+
+      } catch(error) {
+        console.error('Error al modificar el movimientos:', error);
+        this.mostrarToast('Error al modificar el movimiento.', 'red accent-4');
+      } finally {
+        this.movimientoAModificar = null;
+      }
+    }
   }
 }
 </script>
