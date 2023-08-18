@@ -4,14 +4,14 @@
     <div class="input-field s6">
       <h1>Compra</h1>
       <p class="black-text">Cripto:</p> 
-      <select class="browser-default custom-select" v-model="compraSeleccionada">
+      <select class="input-field col s12 custom-select" v-model="compraSeleccionada">
         <option value="" disabled="" selected="">Seleccione</option>
         <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
       </select>
     </div>
     <div class="input-field s6">
       <p class="black-text">Cantidad:</p>
-      <input type="number" v-model="cantidad" min="1" step="1" class="browser-default"/>
+      <input type="number" v-model="cantidad" min="1" step="1" class="input-field col s12"/>
     </div>
   </div>
   <div class="card blue-grey darken-1">
@@ -45,6 +45,9 @@ export default {
       cantidad: 0,
       precioARS: 0,
     };
+  },
+  mounted(){
+    M.FormSelect.init(document.querySelectorAll('select'), {});
   },
   watch: {
     compraSeleccionada: 'obtenerPrecioEnARS',
