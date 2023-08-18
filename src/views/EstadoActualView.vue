@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import M from 'materialize-css';
+
 export default {
   name: 'EstadoActualView',
   data() {
@@ -41,6 +43,9 @@ export default {
       opcionSeleccionada: '',
       textoInput: '',
     };
+  },
+  mounted(){
+    M.FormSelect.init(document.querySelectorAll('select'), {});
   },
   methods: {
     hacerAlgo() {
