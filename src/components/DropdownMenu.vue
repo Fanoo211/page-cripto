@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="dropdown-trigger valign-wrapper" href="#" data-target="dropdown1" style="font-size: 16px">Transacciones <span class="material-symbols-outlined right icon-spacing">currency_exchange</span></a>
+    <a class="dropdown-trigger valign-wrapper" href="#" data-target="dropdown1" >Transacciones <span class="material-symbols-outlined right icon-spacing">currency_exchange</span></a>
     <ul id="dropdown1" class="dropdown-content">
       <li>
         <router-link :to="{ name: 'CompraView' }" class="valign-wrapper titles">
