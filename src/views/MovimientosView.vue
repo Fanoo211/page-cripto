@@ -7,23 +7,25 @@
   <div class="row">
     <div class="col m12">
       <div class="container" v-if="tamañoMovimientos">
-        <table class="table bordered striped">
+        <table class="highlight centered responsive-table">
           <thead>
-            <tr>
+            <tr class="colorThead white-text">
               <th>Criptomoneda</th>
-              <th>Cantidad</th>
-              <th>Precio Total</th>
               <th>Acción</th>
               <th>Fecha</th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(movimiento, index) in movimientos" :key="index">
               <td>{{ movimiento.crypto_code.toUpperCase() }}</td>
-              <td>{{ movimiento.crypto_amount }}</td>
-              <td>ARS {{ movimiento.money }}</td>
               <td>{{ actionTxt(movimiento.action) }}</td>
-              <td>{{ movimiento.datetime }}</td>
+              <td>{{ formatearFecha(movimiento.datetime) }}</td>
+              <td>
+                <a class="waves-effect waves-light btn yellow" @click="mostrarInfo(movimiento)"><i class="material-icons">info_outline</i></a>
+              </td>
               <td>
                 <a class="waves-effect waves-light btn red" @click="mostrarEliminar(movimiento)"><i class="material-icons">delete</i></a>
               </td>
@@ -83,6 +85,22 @@
     </div>
   </div>
 
+  <div id="modal-info" class="modal">
+    <div class="container modal-content">
+      <div v-if="movimientoAMostrar != null">
+        <h1>{{ actionTxt(movimientoAMostrar.action) }}</h1>
+        <p>Usuario: {{ movimientoAMostrar.user_id }}</p>
+        <p>Criptomoneda: {{ movimientoAMostrar.crypto_code.toUpperCase() }}</p>
+        <p>Cantidad: {{ movimientoAMostrar.crypto_amount }}</p>
+        <p>Precio Total: {{ movimientoAMostrar.money }}</p>
+        <p>Fecha: {{ formatearFecha(movimientoAMostrar.datetime) }}</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+  </div>
+
 </div>
 </template>
 
@@ -104,6 +122,7 @@ export default{
       cantidad: 0,
       precioARS: 0,
       movimientoAModificar: null,
+      movimientoAMostrar: null,
     }
   },
   computed: {
@@ -231,11 +250,27 @@ export default{
       } finally {
         this.movimientoAModificar = null;
       }
+    },
+    mostrarInfo(movimiento){
+      this.movimientoAMostrar = movimiento;
+      M.Modal.getInstance(document.querySelector('#modal-info')).open();
+    },
+    formatearFecha(fechaISO){
+      const fecha = new Date(fechaISO);
+
+      const opciones = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+      const formato = new Intl.DateTimeFormat('es-ES', opciones);
+      const fechaFormateada = formato.format(fecha);
+
+      console.log(fechaFormateada);
+      return fechaFormateada + "hs";
     }
   }
 }
 </script>
 
 <style scoped>
-
+.colorThead {
+  background-color: #002CEB;
+}
 </style>
