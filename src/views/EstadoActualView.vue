@@ -1,59 +1,33 @@
 <template>
-<div class="container">
-  <div class="container rounded white">
-    <h3 class="center-align">Ejemplo con MaterializeCSS</h3>
-    <div class="row">
-      <div class="input-field col s6">
-        <select class="browser-default" v-model="opcionSeleccionada">
-          <option value="" disabled>Seleccione una opción</option>
-          <option v-for="(opcion, index) in opciones" :key="index" :value="opcion">{{ opcion }}</option>
-        </select>
-
-
-        <input type="text" v-model="textoInput">
-      </div>
-
-    <div class="row center-align">
-      <div class="col s12">
-        <button class="waves-effect waves-light btn" @click="hacerAlgo">Hacer algo</button>
-      </div>
-    </div>
-  </div>
-  </div>
-</div>
-  <div class="input-field col s12">
-    <select>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Select</label>
+  <div>
+    <p>{{ displayedText }}</p>
   </div>
 </template>
 
 <script>
-import M from 'materialize-css';
-
 export default {
-  name: 'EstadoActualView',
   data() {
     return {
-      opciones: ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'],
-      opcionSeleccionada: '',
-      textoInput: '',
+      fullText: "Hola, este es un ejemplo.",
+      displayedText: ""
     };
   },
-  mounted(){
-    M.FormSelect.init(document.querySelectorAll('select'), {});
+  mounted() {
+    this.showTextLetterByLetter();
   },
   methods: {
-    hacerAlgo() {
-      // Aquí puedes agregar la lógica para realizar alguna acción con los datos seleccionados
-      console.log('Opción seleccionada:', this.opcionSeleccionada);
-      console.log('Texto de entrada:', this.textoInput);
-    },
-  },
+    showTextLetterByLetter() {
+      let index = 0;
+      const interval = setInterval(() => {
+        if (index === this.fullText.length) {
+          clearInterval(interval);
+          return;
+        }
+        this.displayedText += this.fullText[index];
+        index++;
+      }, 100); // Cambia el valor del intervalo según tus preferencias
+    }
+  }
 };
 </script>
 

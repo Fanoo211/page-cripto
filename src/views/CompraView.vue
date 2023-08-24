@@ -4,14 +4,16 @@
     <div class="input-field s6">
       <h1>Compra</h1>
       <p class="black-text">Cripto:</p> 
-      <select class="input-field col s12 custom-select" v-model="compraSeleccionada">
-        <option value="" disabled="" selected="">Seleccione</option>
-        <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
-      </select>
+      <div class="white">
+        <select class="input-field col s12 custom-select black-text" v-model="compraSeleccionada">
+          <option value="" disabled="" selected="">Seleccione</option>
+          <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
+        </select>
+      </div>
     </div>
-    <div class="input-field s6">
-      <p class="black-text">Cantidad:</p>
-      <input type="number" v-model="cantidad" min="1" step="1" class="input-field col s12"/>
+    <p class="black-text">Cantidad:</p>
+    <div class="input-field s6 white">
+      <input type="number" v-model="cantidad" min="1" step="1" class="input-field col s12 white"/>
     </div>
   </div>
   <div class="card blue-grey darken-1">
@@ -120,23 +122,14 @@ export default {
   box-sizing: border-box;
 }
 
-.browser-default {
-  background-color: #ffb70c;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 4px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .custom-container {
   max-width: 600px;
   margin-left: 10px;
-  margin-top: 50px;
+  margin-top: 30px;
   padding: 20px;
   padding-top: 0px;
   border-radius: 5px;
-  background-color: orangered;
+  background-color: #353132;
 }
 
 .custom-select {
