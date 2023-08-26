@@ -4,7 +4,7 @@ import CompraView from '../views/CompraView.vue'
 import VentaView from '../views/VentaView.vue'
 import MovimientosView from '../views/MovimientosView.vue'
 import EstadoActualView from '../views/EstadoActualView.vue'
-
+import PoliticasView from '../views/PoliticasView.vue'
 
 const routes = [
   {
@@ -31,6 +31,11 @@ const routes = [
     path: '/EstadoActualView',
     name: 'EstadoActualView',
     component: EstadoActualView,
+  },
+  {
+    path: '/PoliticasView',
+    name: 'PoliticasView',
+    component: PoliticasView,
   },
 ]
 
