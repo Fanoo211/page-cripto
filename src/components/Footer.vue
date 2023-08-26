@@ -41,7 +41,7 @@
     <div class="footer-copyright">
       <div class="container">
       © 2023 CriptoFano. Todos los derechos reservados.
-      <router-link class="grey-text text-lighten-4 right" :to="{name: 'PoliticasView'}">Políticas y Privacidad</router-link>
+      <router-link class="grey-text text-lighten-4 right btn-redes" :to="{name: 'PoliticasView'}">Políticas y Privacidad</router-link>
       </div>
     </div>
   </footer>
