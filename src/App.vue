@@ -14,7 +14,7 @@
     </div>
   </main>
     
-  <Footer />
+  <Footer v-if="userLogeado" />
 
   </div>
 </template>
