@@ -1,41 +1,107 @@
 <template>
   <div>
-    <p>{{ displayedText }}</p>
+    <h1>Estado Actual de Criptomonedas</h1>
+
+    <div class="container" v-if="tamañoMovimientos">
+      <table class="highlight centered responsive-table">
+        <thead class="colorThead white-text">
+          <tr>
+            <th>Criptomoneda</th>
+            <th>Total Criptomonedas</th>
+            <th>Total Dinero (ARS)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(total, criptoCode) in totales" :key="criptoCode">
+            <td>{{ criptoCode }}</td>
+            <td>{{ total.cantidad }}</td>
+            <td>ARS {{ total.dinero }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container" v-else>
+      <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
+    </div>
+    <div v-if="cargando > 0" class="center-align">
+      <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
+    </div>
+
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import { useAuthStore } from '../store/auth.js';
+
 export default {
+  name: 'EstadoActualView',
   data() {
     return {
-      fullText: "Hola, este es un ejemplo.",
-      displayedText: ""
+      movimientos: [],
+      totales: {},
+      cargando: false,
     };
   },
+  computed: {
+    usuario() {
+      const authStore = useAuthStore();
+      return authStore.usuario;
+    },
+    tamañoMovimientos(){
+      return this.movimientos.length > 0;
+    },
+  },
   mounted() {
-    this.showTextLetterByLetter();
+    this.mostrarMovimientos();
   },
   methods: {
-    showTextLetterByLetter() {
-      let index = 0;
-      const interval = setInterval(() => {
-        if (index === this.fullText.length) {
-          clearInterval(interval);
-          return;
+    async mostrarMovimientos() {
+      let user_id = this.usuario;
+
+      try {
+        this.cargando = true;
+        const response = await axios.get(`https://laboratorio3-f36a.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
+          headers: {
+            'x-apikey': '60eb09146661365596af552f',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        this.movimientos = response.data;
+        this.calcularTotales();
+      } catch (error) {
+        console.error('Error al obtener los movimientos:', error);
+      } finally {
+        this.cargando = false;
+      }
+    },
+    calcularTotales() {
+      this.totales = {};
+      this.movimientos.forEach(movimiento => {
+        const criptoCode = movimiento.crypto_code.toUpperCase();
+        const cantidad = parseFloat(movimiento.crypto_amount);
+        const dinero = parseFloat(movimiento.money);
+        if (!this.totales[criptoCode]) {
+          this.totales[criptoCode] = { cantidad: 0, dinero: 0 };
         }
-        this.displayedText += this.fullText[index];
-        index++;
-      }, 100); // Cambia el valor del intervalo según tus preferencias
-    }
-  }
+        if (movimiento.action === 'purchase') {
+          this.totales[criptoCode].cantidad += cantidad;
+          this.totales[criptoCode].dinero += dinero;
+        } else if (movimiento.action === 'sale') {
+          this.totales[criptoCode].cantidad -= cantidad;
+          this.totales[criptoCode].dinero -= dinero;
+        }
+      });
+    },
+  },
 };
 </script>
 
-<style>
-.container.rounded {
-  border-radius: 10px; /* Ajusta el valor para controlar el radio de las esquinas */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave para mejorar la apariencia */
-  padding: 20px; /* Opcional: Añade un espacio interno para separar el contenido del borde */
+
+<style scoped>
+.colorThead {
+  background-color: #002CEB;
 }
 </style>
 
