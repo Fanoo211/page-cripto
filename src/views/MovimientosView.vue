@@ -159,7 +159,7 @@ export default{
         console.log(this.movimientos);
         
       } catch(error) {
-        console.error('Error al obtener las transacciones:', error);
+        console.error('Error al obtener los movimientos:', error);
       } finally{
         this.cargando = false;
       }

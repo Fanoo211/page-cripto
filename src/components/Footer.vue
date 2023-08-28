@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col l5 s12">
           <h5 class="white-text">Nosotros</h5>
-          <h6>"Somos una cartera de criptomonedas ubicada en Freyre. Nuestro objetivo es brindar a nuestros usuarios una experiencia segura y eficiente para gestionar sus activos digitales. Con un enfoque en la innovación y la seguridad, trabajamos constantemente para ofrecer soluciones que permitan a nuestros clientes explorar y aprovechar el emocionante mundo de las criptomonedas. Ya sea que estés dando tus primeros pasos en este universo financiero o seas un entusiasta experimentado, estamos aquí para respaldarte en cada paso del camino."</h6>
+          <h6>Somos una cartera de criptomonedas ubicada en Freyre. Nuestro objetivo es brindar a nuestros usuarios una experiencia segura y eficiente para gestionar sus activos digitales. Con un enfoque en la innovación y la seguridad, trabajamos constantemente para ofrecer soluciones que permitan a nuestros clientes explorar y aprovechar el emocionante mundo de las criptomonedas. Ya sea que estés dando tus primeros pasos en este universo financiero o seas un entusiasta experimentado, estamos aquí para respaldarte en cada paso del camino.</h6>
         </div>
 
         <div class="col l4 offset-l2 s12">

@@ -4,7 +4,7 @@
 
       <div class="col s12 m8 l8 "> <!-- Note that "m4 l3" was added -->
         <div class="text-bienvenida">
-          <h1>{{ textoMostrar }}</h1>
+          <h1 style="font-size: 80px">{{ textoMostrar }}</h1>
         </div>
 
         <div class="text-home">
@@ -97,7 +97,7 @@ export default {
 }
 
 .text-bienvenida {
-  font-family: 'Lilita One', cursive;
+  font-family: 'Markazi Text', serif;
 }
 </style>
 
