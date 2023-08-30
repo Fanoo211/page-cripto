@@ -15,7 +15,7 @@
           <tr v-for="(total, criptoCode) in totales" :key="criptoCode">
             <td>{{ criptoCode }}</td>
             <td>{{ total.cantidad }}</td>
-            <td>ARS {{ total.dinero }}</td>
+            <td>ARS {{ total.dinero.toFixed(2) }}</td>
           </tr>
         </tbody>
       </table>
@@ -32,7 +32,8 @@
 
 <script>
 import axios from 'axios';
-import { useAuthStore } from '../store/auth.js';
+import { useUserStore } from '../store/user.js';
+import { useTotalesStore } from '../store/totales.js';
 
 export default {
   name: 'EstadoActualView',
@@ -45,8 +46,8 @@ export default {
   },
   computed: {
     usuario() {
-      const authStore = useAuthStore();
-      return authStore.usuario;
+      const userStore = useUserStore();
+      return userStore.usuario;
     },
     tamañoMovimientos(){
       return this.movimientos.length > 0;
@@ -61,9 +62,9 @@ export default {
 
       try {
         this.cargando = true;
-        const response = await axios.get(`https://laboratorio3-f36a.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
+        const response = await axios.get(`https://laboratorio3-5459.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
           headers: {
-            'x-apikey': '60eb09146661365596af552f',
+            'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
             'Content-Type': 'application/json'
           }
         });
@@ -93,6 +94,17 @@ export default {
           this.totales[criptoCode].dinero -= dinero;
         }
       });
+        
+      for (const criptoCode in this.totales) {
+        const criptoInfo = this.totales[criptoCode]; 
+        
+        if (criptoInfo.cantidad === 0) {
+          criptoInfo.dinero = 0;
+        }
+      }
+      const totalesStore = useTotalesStore();
+      totalesStore.setTotales(this.totales);
+
     },
   },
 };
