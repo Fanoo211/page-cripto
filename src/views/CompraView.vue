@@ -24,16 +24,24 @@
   </div>
   <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
 </div>
+
+<div class="input-field s6 right">
+  <TablaCriptomonedas />
+</div>
 </template>
 
 
 <script>
+import TablaCriptomonedas from '../components/TablaCriptomonedas.vue';
 import { useUserStore } from '../store/user.js';
 import axios from 'axios';
 import M from 'materialize-css';
 
 export default {
   name: 'CompraView',
+  components: {
+    TablaCriptomonedas,
+  },
   computed: {
     usuario() {
       const userStore = useUserStore();
