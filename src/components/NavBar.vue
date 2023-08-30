@@ -53,6 +53,7 @@ import { useUserStore } from '../store/user.js';
 import M from 'materialize-css';
 
 export default{
+  name: 'NavBar',
   components: {
     DropdownMenu
   },

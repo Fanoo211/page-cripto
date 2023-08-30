@@ -22,6 +22,7 @@
 import M from 'materialize-css'
 
 export default {
+  name: 'DropdownMenu',
   mounted() {
     // Inicializar el menú desplegable después de que se renderiza el componente
     const elemsDropdown = document.querySelectorAll('.dropdown-trigger');
