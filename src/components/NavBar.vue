@@ -49,7 +49,7 @@
 
 <script>
 import DropdownMenu from '../components/DropdownMenu.vue';
-import { useAuthStore } from '../store/auth.js';
+import { useUserStore } from '../store/user.js';
 import M from 'materialize-css';
 
 export default{
@@ -58,8 +58,8 @@ export default{
   },
   computed: {
     userLogeado() {
-      const authStore = useAuthStore();
-      return authStore.userLogeado;
+      const userStore = useUserStore();
+      return userStore.userLogeado;
     },
   },
   mounted(){
@@ -67,8 +67,8 @@ export default{
   },
   methods: {
     cerrarSesion() {
-      const authStore = useAuthStore();
-      authStore.logout();
+      const userStore = useUserStore();
+      userStore.logout();
       this.mostrarToast('¡SESIÓN CERRADA!', 'red accent-4');
       this.cerrarSidenav();
     },

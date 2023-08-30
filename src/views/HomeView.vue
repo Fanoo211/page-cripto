@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { useAuthStore } from '../store/auth.js';
+import { useUserStore } from '../store/user.js';
 
 export default {
   name: 'HomeView',
@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     usuario() {
-      const authStore = useAuthStore();
+      const authStore = useUserStore();
       return authStore.usuario;
     }
   },

@@ -28,7 +28,7 @@
 
 
 <script>
-import { useAuthStore } from '../store/auth.js';
+import { useUserStore } from '../store/user.js';
 import axios from 'axios';
 import M from 'materialize-css';
 
@@ -36,8 +36,8 @@ export default {
   name: 'CompraView',
   computed: {
     usuario() {
-      const authStore = useAuthStore();
-      return authStore.usuario;
+      const userStore = useUserStore();
+      return userStore.usuario;
     }
   },
   data() {
@@ -87,9 +87,9 @@ export default {
         };
 
         try {
-          const response = await axios.post('https://laboratorio3-f36a.restdb.io/rest/transactions', datos, {
+          const response = await axios.post('https://laboratorio3-5459.restdb.io/rest/transactions', datos, {
             headers: {
-              'x-apikey':'60eb09146661365596af552f',
+              'x-apikey':'64a57c2b86d8c50fe6ed8fa5',
               'Content-Type': 'application/json'
             },
           })

@@ -106,7 +106,7 @@
 
 <script>
 import axios from 'axios';
-import { useAuthStore } from '../store/auth.js';
+import { useUserStore } from '../store/user.js';
 import M from 'materialize-css';
 
 export default{
@@ -127,8 +127,8 @@ export default{
   },
   computed: {
     usuario() {
-      const authStore = useAuthStore();
-      return authStore.usuario;
+      const userStore = useUserStore();
+      return userStore.usuario;
     },
     tamañoMovimientos(){
       return this.movimientos.length > 0;
@@ -148,9 +148,9 @@ export default{
 
       try {
         this.cargando = true;
-        const response = await axios.get(`https://laboratorio3-f36a.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
+        const response = await axios.get(`https://laboratorio3-5459.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
         headers: {
-          'x-apikey': '60eb09146661365596af552f',
+          'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
           'Content-Type': 'application/json'
         }
       });
@@ -183,9 +183,9 @@ export default{
     async eliminarMovimiento() {
       M.Modal.getInstance(document.querySelector('#modal-eliminar')).close();
       try {
-        const response = await axios.delete(`https://laboratorio3-f36a.restdb.io/rest/transactions/${this.movimientoAEliminar._id}`, {
+        const response = await axios.delete(`https://laboratorio3-5459.restdb.io/rest/transactions/${this.movimientoAEliminar._id}`, {
           headers: {
-            'x-apikey': '60eb09146661365596af552f',
+            'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
             'Content-Type': 'application/json',
           },
         });
@@ -231,11 +231,11 @@ export default{
       console.log(datosNuevos);
 
       try {
-        const response = await axios.patch(`https://laboratorio3-f36a.restdb.io/rest/transactions/${this.movimientoAModificar._id}`,
+        const response = await axios.patch(`https://laboratorio3-5459.restdb.io/rest/transactions/${this.movimientoAModificar._id}`,
         datosNuevos,
         {
           headers: {
-            'x-apikey': '60eb09146661365596af552f',
+            'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
             'Content-Type': 'application/json',          
           }
         });
@@ -262,7 +262,6 @@ export default{
       const formato = new Intl.DateTimeFormat('es-ES', opciones);
       const fechaFormateada = formato.format(fecha);
 
-      console.log(fechaFormateada);
       return fechaFormateada + "hs";
     }
   }

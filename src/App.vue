@@ -23,7 +23,7 @@
 import Login from './components/Login.vue';
 import NavBar from './components/NavBar.vue';
 import Footer from './components/Footer.vue';
-import { useAuthStore } from './store/auth.js';
+import { useUserStore } from './store/user.js';
 import M from 'materialize-css';
 
 export default {
@@ -35,12 +35,12 @@ export default {
   },
   computed: {
     userLogeado() {
-      const authStore = useAuthStore();
-      return authStore.userLogeado;
+      const userStore = useUserStore();
+      return userStore.userLogeado;
     },
     usuario() {
-      const authStore = useAuthStore();
-      return authStore.usuario;
+      const userStore = useUserStore();
+      return userStore.usuario;
     },
   },
   methods: {
@@ -52,16 +52,16 @@ export default {
       } else if (!alphanumericRegex.test(usuario)) {
         this.mostrarToast('El usuario debe contener solo letras y números.', 'blue darken-1');
       } else {
-        const authStore = useAuthStore();
-        authStore.login(usuario);
+        const userStore = useUserStore();
+        userStore.login(usuario);
         this.mostrarToast('¡SESIÓN INICIADA!', 'green accent-4');
       }
 
       this.$router.push({ name: 'HomeView' });
     },
     cerrarSesion() {
-      const authStore = useAuthStore();
-      authStore.logout();
+      const userStore = useUserStore();
+      userStore.logout();
       this.mostrarToast('¡SESIÓN CERRADA!', 'red accent-4');
     },
     mostrarToast(mensaje, color) {
