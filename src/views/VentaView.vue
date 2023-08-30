@@ -1,4 +1,5 @@
 <template>
+
 <div class="container left custom-container">
   <div class="row">
     <div class="input-field s6">
@@ -22,20 +23,34 @@
   </div>
   <button class="waves-effect waves-light btn yellow darken-3" @click="vender">Vender</button>
 </div>
+
+<div class="input-field s6 right">
+  <TablaCriptomonedas />
+</div>
+
 </template>
 
 <script>
-import { useAuthStore } from '@/store/auth';
+import TablaCriptomonedas from '../components/TablaCriptomonedas.vue';
+import { useUserStore } from '@/store/user';
+import { useTotalesStore } from '../store/totales.js';
 import axios from 'axios';
 import M from 'materialize-css';
 
 export default {
   name: 'VentaView',
+  components: {
+    TablaCriptomonedas,
+  },
   computed: {
     usuario() {
-      const authStore = useAuthStore();
-      return authStore.usuario;
-    }
+      const userStore = useUserStore();
+      return userStore.usuario;
+    },
+    totales() {
+      const totalesStore = useTotalesStore();
+      return totalesStore.totales;
+    },
   },
   data() {
     return {
@@ -43,10 +58,14 @@ export default {
       ventaSeleccionada: '',
       cantidad: 0,
       precioARS: 0,
+      movimientos: [],
+      sumaCantidadVenta: 0,
     };
   },
   mounted(){
     M.FormSelect.init(document.querySelectorAll('select'), {});
+
+    this.obtenerMovimientos();
   },
   watch: {
     ventaSeleccionada: 'obtenerPrecioEnARS',
@@ -71,39 +90,69 @@ export default {
       M.toast({ html: mensaje, classes: `${color}` });
     },
     async vender() {
-      if (this.cantidad > 0 && this.precioARS > 0) {
-        const datetime = new Date().toISOString();
-
-        const datos = {
-          user_id: this.usuario,
-          action: 'sale',
-          crypto_code: this.ventaSeleccionada.toLowerCase(),
-          crypto_amount: this.cantidad.toString(),
-          money: this.precioARS.toFixed(2),
-          datetime: datetime,
-        };
-
-        try {
-          const response = await axios.post('https://laboratorio3-f36a.restdb.io/rest/transactions', datos, {
-            headers: {
-              'x-apikey':'60eb09146661365596af552f',
-              'Content-Type': 'application/json'
-            },
-          })
-
-          if(response.status === 201){
-            this.mostrarToast('Venta guardada correctamente!', 'green accent-4');
-            console.log(datos);
-          }
-            
-        } catch (error) {
-          this.mostrarToast('Error en la solicitud a la API', 'red accent-4');
-          console.error(error);
+      for(let movimiento of this.movimientos) {
+        if(movimiento.crypto_code === this.ventaSeleccionada.toLowerCase() && movimiento.action === 'purchase'){
+          this.sumaCantidadVenta += parseFloat(movimiento.crypto_amount);
         }
+        if(movimiento.crypto_code === this.ventaSeleccionada.toLowerCase() && movimiento.action === 'sale'){
+          this.sumaCantidadVenta -= parseFloat(movimiento.crypto_amount);
+        }
+      }
+
+      if (this.cantidad > 0 && this.precioARS > 0) {
+        if(this.cantidad <= this.sumaCantidadVenta){
+          const datetime = new Date().toISOString();
+
+          const datos = {
+            user_id: this.usuario,
+            action: 'sale',
+            crypto_code: this.ventaSeleccionada.toLowerCase(),
+            crypto_amount: this.cantidad.toString(),
+            money: this.precioARS.toFixed(2),
+            datetime: datetime,
+          };
+
+          try {
+            const response = await axios.post('https://laboratorio3-5459.restdb.io/rest/transactions', datos, {
+              headers: {
+                'x-apikey':'64a57c2b86d8c50fe6ed8fa5',
+                'Content-Type': 'application/json'
+              },
+            })
+
+            if(response.status === 201){
+              this.mostrarToast('Venta guardada correctamente!', 'green accent-4');
+              this.sumaCantidadVenta = 0;
+            }
+              
+          } catch (error) {
+            this.mostrarToast('Error en la solicitud a la API', 'red accent-4');
+            console.error(error);
+          }        
+        } else {
+          this.mostrarToast('Fondos insuficientes para la venta', 'red accent-4');
+          this.sumaCantidadVenta = 0;
+        }
+
       } else {
         this.mostrarToast('Seleccione criptomoneda y cantidad', 'red accent-4');
       }
     },
+    async obtenerMovimientos() {
+      let user_id = this.usuario
+
+      try {
+        const response = await axios.get(`https://laboratorio3-5459.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
+        headers: {
+          'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
+          'Content-Type': 'application/json'
+        }
+      });
+        this.movimientos = response.data;
+      } catch(error) {
+        console.error('Error al obtener los movimientos:', error);
+      }   
+    }
   },
 };
 </script>
