@@ -1,32 +1,31 @@
 <template>
-<div class="container left custom-container">
+<div class="container">
   <div class="row">
-    <div class="input-field s6">
-      <h1>Compra</h1>
-      <p class="black-text">Cripto:</p> 
-      <div class="white">
-        <select class="input-field col s12 custom-select black-text" v-model="compraSeleccionada">
+    <div class="col s6">
+      <div class="input-field custom-container">
+        <h1>Compra</h1>
+        <p class="black-text">Cripto:</p> 
+        <select class="input-field custom-select black-text" v-model="compraSeleccionada">
           <option value="" disabled="" selected="">Seleccione</option>
           <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
         </select>
+        <div>
+          <p class="black-text">Cantidad:</p>
+          <input type="number" v-model="cantidad" min="1" step="1" class="input-field white"/>
+        </div>
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Precio en ARS</span>
+            <p>ARS {{ precioARS.toFixed(2) }}</p>
+          </div>
+        </div>
+        <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
       </div>
     </div>
-    <p class="black-text">Cantidad:</p>
-    <div class="input-field s6 white">
-      <input type="number" v-model="cantidad" min="1" step="1" class="input-field col s12 white"/>
+    <div class="col s6 tabla">
+      <TablaCriptomonedas />
     </div>
   </div>
-  <div class="card blue-grey darken-1">
-    <div class="card-content white-text">
-      <span class="card-title">Precio en ARS</span>
-      <p>ARS {{ precioARS.toFixed(2) }}</p>
-    </div>
-  </div>
-  <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
-</div>
-
-<div class="input-field s6 right">
-  <TablaCriptomonedas />
 </div>
 </template>
 
@@ -130,17 +129,29 @@ export default {
   box-sizing: border-box;
 }
 
+.browser-default {
+  background-color: #ffb70c;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .custom-container {
   max-width: 600px;
-  margin-left: 10px;
-  margin-top: 30px;
+  margin-left: 0px;
+  margin-top: 25px;
   padding: 20px;
-  padding-top: 0px;
+  padding-top: 1px;
   border-radius: 5px;
-  background-color: #353132;
+  background-color: gray;
 }
 
 .custom-select {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+.tabla {
+  margin-top: 25px;
 }
 </style>

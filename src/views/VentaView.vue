@@ -1,39 +1,37 @@
 <template>
-
-<div class="container left custom-container">
+<div class="container">
   <div class="row">
-    <div class="input-field s6">
-      <h1>Venta</h1>  
-      <p class="black-text">Cripto:</p> 
-      <select class="input-field col s12 custom-select" v-model="ventaSeleccionada">
-        <option value="" disabled="" selected="">Seleccione</option>
-        <option v-for="(opcion, index) in opcionesVenta" :key="index" :value="opcion">{{ opcion }}</option>
-      </select>
+    <div class="col s6">
+      <div class="input-field custom-container">
+        <h1 class="white-text">Venta</h1>  
+        <p class="white-text">Cripto:</p> 
+        <select class="input-field custom-select" v-model="ventaSeleccionada">
+          <option value="" disabled="" selected="">Seleccione</option>
+          <option v-for="(opcion, index) in opcionesVenta" :key="index" :value="opcion">{{ opcion }}</option>
+        </select>
+        <div>
+          <p class="white-text">Cantidad:</p>
+          <input type="number" v-model="cantidad" min="1" step="1" class="input-field">
+        </div>
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Precio en ARS</span>
+            <p>ARS {{ precioARS.toFixed(2) }}</p>
+          </div>
+        </div>
+        <button class="waves-effect waves-light btn yellow darken-3" @click="vender">Vender</button>
+      </div>
     </div>
-    <div class="input-field s6">
-      <p class="black-text">Cantidad:</p>
-      <input type="number" v-model="cantidad" min="1" step="1" class="input-field col s12">
+    <div class="col s6 tabla">
+      <TablaCriptomonedas />
     </div>
   </div>
-  <div class="card blue-grey darken-1">
-    <div class="card-content white-text">
-      <span class="card-title">Precio en ARS</span>
-      <p>ARS {{ precioARS.toFixed(2) }}</p>
-    </div>
-  </div>
-  <button class="waves-effect waves-light btn yellow darken-3" @click="vender">Vender</button>
 </div>
-
-<div class="input-field s6 right">
-  <TablaCriptomonedas />
-</div>
-
 </template>
 
 <script>
 import TablaCriptomonedas from '../components/TablaCriptomonedas.vue';
 import { useUserStore } from '@/store/user';
-import { useTotalesStore } from '../store/totales.js';
 import axios from 'axios';
 import M from 'materialize-css';
 
@@ -46,10 +44,6 @@ export default {
     usuario() {
       const userStore = useUserStore();
       return userStore.usuario;
-    },
-    totales() {
-      const totalesStore = useTotalesStore();
-      return totalesStore.totales;
     },
   },
   data() {
@@ -177,15 +171,18 @@ export default {
 
 .custom-container {
   max-width: 600px;
-  margin-left: 10px;
-  margin-top: 50px;
+  margin-left: 0px;
+  margin-top: 25px;
   padding: 20px;
-  padding-top: 0px;
+  padding-top: 1px;
   border-radius: 5px;
-  background-color: orangered;
+  background-color: gray;
 }
 
 .custom-select {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+.tabla {
+  margin-top: 25px;
 }
 </style>
