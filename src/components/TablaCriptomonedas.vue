@@ -1,7 +1,7 @@
 <template>
     <div>
-      <table class="striped centered responsive-table">
-        <thead>
+      <table class="striped centered responsive-table tabla">
+        <thead class="theadColor">
           <tr>
             <th>Criptomoneda</th>
             <th>Valor Unitario</th>
@@ -9,8 +9,8 @@
         </thead>
         <tbody>
           <tr v-for="(opcion, index) in opcionesCripto" :key="index">
-            <td>{{ opcion }}</td>
-            <td>{{ valorCripto[index] }}</td>
+            <td>{{ opcion.toUpperCase() }}</td>
+            <td>ARS {{ valorCripto[index] }}</td>
           </tr>
         </tbody>
       </table>
@@ -40,9 +40,18 @@ export default {
         }
       } catch (error) {
         console.error('Error al obtener el precio en ARS:', error);
-        this.precioARS = 0;
       }
     },
   }
 }
 </script>
+
+<style scoped>
+.tabla {
+  background-color: #3F4240;
+  color: white;
+}
+.theadColor {
+  background-color: black;
+}
+</style>
