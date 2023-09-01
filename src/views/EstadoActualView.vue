@@ -33,7 +33,6 @@
 <script>
 import axios from 'axios';
 import { useUserStore } from '../store/user.js';
-import { useTotalesStore } from '../store/totales.js';
 
 export default {
   name: 'EstadoActualView',
@@ -102,8 +101,6 @@ export default {
           criptoInfo.dinero = 0;
         }
       }
-      const totalesStore = useTotalesStore();
-      totalesStore.setTotales(this.totales);
 
     },
   },
