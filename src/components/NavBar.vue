@@ -6,6 +6,8 @@
       <div class="sideNavbar">
         <ul class="sidenav" id="mobile-demo">
           <li><router-link :to="{name: 'HomeView'}" @click="cerrarSidenav">Inicio</router-link></li>
+          <li><router-link :to="{name: 'CompraView'}" @click="cerrarSidenav">Comprar</router-link></li>
+          <li><router-link :to="{name: 'VentaView'}" @click="cerrarSidenav">Vender</router-link></li>
           <li><router-link :to="{name: 'MovimientosView'}" @click="cerrarSidenav">Movimientos</router-link></li>
           <li><router-link :to="{name: 'EstadoActualView'}" @click="cerrarSidenav">Estado Actual</router-link></li>
           <li v-if="userLogeado">
