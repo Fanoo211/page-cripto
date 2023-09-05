@@ -15,7 +15,7 @@
           <tr v-for="(total, criptoCode) in totales" :key="criptoCode">
             <td>{{ criptoCode }}</td>
             <td>{{ total.cantidad }}</td>
-            <td>ARS {{ total.dinero.toFixed(2) }}</td>
+            <td> {{ numeroConSeparadorDecimales(total.dinero) }}</td>
           </tr>
         </tbody>
       </table>
@@ -76,32 +76,47 @@ export default {
         this.cargando = false;
       }
     },
-    calcularTotales() {
+    async obtenerPrecioEnARS(opcion) {
+      try {
+        const response = await axios.get(`https://criptoya.com/api/argenbtc/${opcion}/ars`);
+        return response.data.ask;
+      } catch (error) {
+        console.error('Error al obtener el precio en ARS:', error);
+        return 0;
+      }
+    },
+    async calcularTotales() {
       this.totales = {};
-      this.movimientos.forEach(movimiento => {
+      for (const movimiento of this.movimientos) {
         const criptoCode = movimiento.crypto_code.toUpperCase();
         const cantidad = parseFloat(movimiento.crypto_amount);
-        const dinero = parseFloat(movimiento.money);
+
+        const precioEnARS = await this.obtenerPrecioEnARS(criptoCode);
+
         if (!this.totales[criptoCode]) {
           this.totales[criptoCode] = { cantidad: 0, dinero: 0 };
         }
         if (movimiento.action === 'purchase') {
           this.totales[criptoCode].cantidad += cantidad;
-          this.totales[criptoCode].dinero += dinero;
+          this.totales[criptoCode].dinero += cantidad * precioEnARS;
         } else if (movimiento.action === 'sale') {
           this.totales[criptoCode].cantidad -= cantidad;
-          this.totales[criptoCode].dinero -= dinero;
+          this.totales[criptoCode].dinero -= cantidad * precioEnARS;
         }
-      });
-        
+      }
+      
       for (const criptoCode in this.totales) {
-        const criptoInfo = this.totales[criptoCode]; 
-        
+        const criptoInfo = this.totales[criptoCode];
+
         if (criptoInfo.cantidad === 0) {
           criptoInfo.dinero = 0;
         }
       }
-
+    },
+    numeroConSeparadorDecimales(numero) {
+      const opciones = { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 };
+      const numeroFormateado = numero.toLocaleString('es-AR', opciones);
+      return numeroFormateado.toLocaleString();
     },
   },
 };
