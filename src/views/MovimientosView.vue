@@ -75,7 +75,7 @@
       <div class="card blue-grey darken-1">
         <div class="card-content white-text">
           <span class="card-title">Precio en ARS</span>
-          <p>ARS {{ precioARS.toFixed(2) }}</p>
+          <p> {{ numeroConSeparadorDecimales(precioARS) }}</p>
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
         <p>Usuario: {{ movimientoAMostrar.user_id }}</p>
         <p>Criptomoneda: {{ movimientoAMostrar.crypto_code.toUpperCase() }}</p>
         <p>Cantidad: {{ movimientoAMostrar.crypto_amount }}</p>
-        <p>Precio Total: {{ movimientoAMostrar.money }}</p>
+        <p>Precio Total (ARS): {{ numeroConSeparadorDecimales(parseFloat(movimientoAMostrar.money)) }}</p>
         <p>Fecha: {{ formatearFecha(movimientoAMostrar.datetime) }}</p>
       </div>
     </div>
@@ -156,7 +156,7 @@ export default{
       });
         this.movimientos = response.data;
         //this.tamañoMovimientos = this.movimientos.length;
-        console.log(this.movimientos);
+        //console.log(this.movimientos);
         
       } catch(error) {
         console.error('Error al obtener los movimientos:', error);
@@ -181,6 +181,13 @@ export default{
       M.Modal.getInstance(document.querySelector('#modal-eliminar')).open();
     },
     async eliminarMovimiento() {
+      if (this.cargando) {
+        this.mostrarToast('Espere un momento.', 'red accent-4');
+        return;
+      }
+
+      this.cargando = true;
+
       M.Modal.getInstance(document.querySelector('#modal-eliminar')).close();
       try {
         const response = await axios.delete(`https://laboratorio3-5459.restdb.io/rest/transactions/${this.movimientoAEliminar._id}`, {
@@ -190,7 +197,7 @@ export default{
           },
         });
 
-        this.mostrarMovimientos();
+       await this.mostrarMovimientos();
        this.mostrarToast('Registro eliminado correctamente!', 'green accent-4');
 
         console.log(response.data);
@@ -198,6 +205,7 @@ export default{
         console.error('Error al eliminar el movimiento:', error);
         this.mostrarToast('Error al eliminar el movimiento.', 'red accent-4');
       } finally {
+        this.cargando = false;
         this.movimientoAEliminar = null;
       }
     },
@@ -263,7 +271,12 @@ export default{
       const fechaFormateada = formato.format(fecha);
 
       return fechaFormateada + "hs";
-    }
+    },
+    numeroConSeparadorDecimales(numero) {
+      const opciones = { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 };
+      const numeroFormateado = numero.toLocaleString('es-AR', opciones);
+      return numeroFormateado.toLocaleString();
+    },
   }
 }
 </script>
