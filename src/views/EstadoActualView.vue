@@ -23,7 +23,8 @@
     <div class="container" v-else>
       <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
     </div>
-    <div v-if="cargando > 0" class="center-align">
+
+    <div v-if="cargando" class="center-align">
       <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
     </div>
 
@@ -69,7 +70,7 @@ export default {
         });
 
         this.movimientos = response.data;
-        this.calcularTotales();
+        await this.calcularTotales();
       } catch (error) {
         console.error('Error al obtener los movimientos:', error);
       } finally {
@@ -102,14 +103,6 @@ export default {
         } else if (movimiento.action === 'sale') {
           this.totales[criptoCode].cantidad -= cantidad;
           this.totales[criptoCode].dinero -= cantidad * precioEnARS;
-        }
-      }
-      
-      for (const criptoCode in this.totales) {
-        const criptoInfo = this.totales[criptoCode];
-
-        if (criptoInfo.cantidad === 0) {
-          criptoInfo.dinero = 0;
         }
       }
     },
