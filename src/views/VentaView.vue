@@ -16,7 +16,7 @@
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
             <span class="card-title">Precio en ARS</span>
-            <p>ARS {{ precioARS.toFixed(2) }}</p>
+            <p> {{ numeroConSeparadorDecimales(precioARS) }}</p>
           </div>
         </div>
         <button class="waves-effect waves-light btn yellow darken-3" @click="vender">Vender</button>
@@ -146,7 +146,12 @@ export default {
       } catch(error) {
         console.error('Error al obtener los movimientos:', error);
       }   
-    }
+    },
+    numeroConSeparadorDecimales(numero) {
+      const opciones = { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 };
+      const numeroFormateado = numero.toLocaleString('es-AR', opciones);
+      return numeroFormateado.toLocaleString();
+    },
   },
 };
 </script>

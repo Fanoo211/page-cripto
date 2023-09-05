@@ -4,13 +4,13 @@
         <thead class="theadColor">
           <tr>
             <th>Criptomoneda</th>
-            <th>Valor Unitario</th>
+            <th>Valor Unitario (ARS)</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(opcion, index) in opcionesCripto" :key="index">
             <td>{{ opcion.toUpperCase() }}</td>
-            <td>ARS {{ valorCripto[index] }}</td>
+            <td v-if="typeof valorCripto[index] === 'number'"> {{ numeroConSeparadorDecimales(valorCripto[index]) }}</td>
           </tr>
         </tbody>
       </table>
@@ -41,6 +41,11 @@ export default {
       } catch (error) {
         console.error('Error al obtener el precio en ARS:', error);
       }
+    },
+    numeroConSeparadorDecimales(numero) {
+      const opciones = { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 };
+      const numeroFormateado = numero.toLocaleString('es-AR', opciones);
+      return numeroFormateado.toLocaleString();
     },
   }
 }
