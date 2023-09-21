@@ -45,19 +45,30 @@ export default {
   },
   methods: {
     sesionIniciada(usuario) {
-      const alphanumericRegex = /^[a-zA-Z0-9]+$/; //https://www.globalnerdy.com/wp-content/uploads/2022/01/regex-fright.jpg
-
       if (!usuario.trim()) {
         this.mostrarToast('Por favor, ingrese un usuario válido.', 'blue darken-1');
-      } else if (!alphanumericRegex.test(usuario)) {
-        this.mostrarToast('El usuario debe contener solo letras y números.', 'blue darken-1');
       } else {
-        const userStore = useUserStore();
-        userStore.login(usuario);
-        this.mostrarToast('¡SESIÓN INICIADA!', 'green accent-4');
-      }
+        let tieneLetras = false;
+        let tieneNumeros = false;
 
-      this.$router.push({ name: 'HomeView' });
+        for (let i = 0; i < usuario.length; i++) {
+          const char = usuario.charAt(i);
+          if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+            tieneLetras = true;
+          } else if (char >= '0' && char <= '9') {
+            tieneNumeros = true;
+          }
+        }
+
+        if (tieneLetras && tieneNumeros) {
+          const userStore = useUserStore();
+          userStore.login(usuario);
+          this.mostrarToast('¡SESIÓN INICIADA!', 'green accent-4');
+          this.$router.push({ name: 'HomeView' });
+        } else {
+          this.mostrarToast('El usuario debe contener al menos una letra y un número.', 'blue darken-1');
+        }
+      }
     },
     cerrarSesion() {
       const userStore = useUserStore();
@@ -81,15 +92,5 @@ export default {
   color: #2c3e50;
 }
 
-/* Estilos para el cuerpo de la página */
-body {
-  /* Ajusta la imagen de fondo con el siguiente formato: */
-  /*background-image: url('../src/assets/fondo4.jpg');*/
-  background-color: white;
-  /* Ajusta la forma en que se muestra la imagen */
-  background-size: cover; /* La imagen cubrirá todo el contenedor */
-  background-position: center; /* Centra la imagen vertical y horizontalmente */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-}
 
 </style>
