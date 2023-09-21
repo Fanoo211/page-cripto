@@ -10,8 +10,9 @@
           <li><router-link :to="{name: 'VentaView'}" @click="cerrarSidenav">Vender</router-link></li>
           <li><router-link :to="{name: 'MovimientosView'}" @click="cerrarSidenav">Movimientos</router-link></li>
           <li><router-link :to="{name: 'EstadoActualView'}" @click="cerrarSidenav">Estado Actual</router-link></li>
+          <li><router-link :to="{name: 'AnalisisDeInversionesView'}" @click="cerrarSidenav">Análisis De Inversiones</router-link></li>
           <li v-if="userLogeado">
-            <a class="waves-effect waves-light btn white red-text accent-4" @click="cerrarSesion">
+            <a class="waves-effect waves-light btn red white-text accent-4" @click="cerrarSesion">
               Cerrar Sesión <i class="material-icons right">exit_to_app</i>
             </a>
           </li>
@@ -19,30 +20,31 @@
       </div>
 
       <div class="botonesNavbar">
-        <div class="logoNavbar">
-          <a href="#!" class="brand-logo center">
-            CriptoFano
-            <img src="../assets/logoPage.png" alt="logoPage" class="logo-page left">
-          </a>
-        </div>
-
         <div class="logoutNavbar">
           <ul class="right hide-on-med-and-down">
             <li v-if="userLogeado">
-              <a class="waves-effect waves-light btn white red-text accent-4" @click="cerrarSesion">
+              <a class="waves-effect waves-light btn red white-text accent-4" @click="cerrarSesion">
                 Cerrar Sesión <i class="material-icons right">exit_to_app</i>
               </a>
             </li>
           </ul>
         </div>
+
+
+        <router-link :to="{name: 'HomeView'}" class="brand-logo center">
+          CriptoFano
+          <img src="../assets/logoPage.png" alt="logoPage" class="logo-page left">
+        </router-link>
+
         <div class="viewsNavbar">
           <ul class="left hide-on-med-and-down" v-if="userLogeado">
-            <li><router-link :to="{name: 'HomeView'}" class="valign-wrapper" style="font-size: 16px">Inicio<span class="material-symbols-outlined right icon-spacing">home</span></router-link></li>
             <li><DropdownMenu /></li>
-            <li><router-link :to="{name: 'MovimientosView'}" class="valign-wrapper" style="font-size: 16px">Movimientos<span class="material-symbols-outlined right icon-spacing">swap_horiz</span></router-link></li>
-            <li><router-link :to="{name: 'EstadoActualView'}" class="valign-wrapper" style="font-size: 16px">Estado Actual<span class="material-symbols-outlined right icon-spacing">info</span></router-link></li>
+            <li><router-link :to="{name: 'MovimientosView'}" class="valign-wrapper" >Movimientos<span class="material-symbols-outlined right icon-spacing">swap_horiz</span></router-link></li>
+            <li><router-link :to="{name: 'EstadoActualView'}" class="valign-wrapper" >Estado Actual<span class="material-symbols-outlined right icon-spacing">info</span></router-link></li>
+            <li><router-link :to="{name: 'AnalisisDeInversionesView'}" class="valign-wrapper" >Inveriones<span class="material-symbols-outlined right icon-spacing">trending_up</span></router-link></li>
           </ul>
         </div>
+
       </div>
 
     </div>
@@ -107,5 +109,13 @@ font-family: 'Dancing Script', cursive;
 .logo-page {
 width: 60px;
 height: 60px;
+}
+
+.sidenav{
+  background-color: #002CEB;
+}
+
+.sidenav a {
+  color: white;
 }
 </style>

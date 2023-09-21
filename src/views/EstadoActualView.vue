@@ -2,19 +2,19 @@
   <div>
     <h1>Estado Actual de Criptomonedas</h1>
 
-    <div class="container" v-if="tamañoMovimientos">
+    <div class="container z-depth-2" v-if="tamañoMovimientos">
       <table class="highlight centered responsive-table">
         <thead class="colorThead white-text">
           <tr>
             <th>Criptomoneda</th>
             <th>Total Criptomonedas</th>
-            <th>Total Dinero (ARS)</th>
+            <th>Valor Actual (ARS)</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(total, criptoCode) in totales" :key="criptoCode">
             <td>{{ criptoCode }}</td>
-            <td>{{ total.cantidad }}</td>
+            <td>{{ total.cantidad % 1 === 0 ? total.cantidad : total.cantidad.toFixed(1) }}</td>
             <td> {{ numeroConSeparadorDecimales(total.dinero) }}</td>
           </tr>
         </tbody>
@@ -34,6 +34,7 @@
 <script>
 import axios from 'axios';
 import { useUserStore } from '../store/user.js';
+import apiClient from '../conexionAPI';
 
 export default {
   name: 'EstadoActualView',
@@ -62,12 +63,7 @@ export default {
 
       try {
         this.cargando = true;
-        const response = await axios.get(`https://laboratorio3-5459.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
-          headers: {
-            'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
-            'Content-Type': 'application/json'
-          }
-        });
+        const response = await apiClient.get(`/transactions?q={"user_id": "${user_id}"}`)
 
         this.movimientos = response.data;
         await this.calcularTotales();
@@ -77,10 +73,11 @@ export default {
         this.cargando = false;
       }
     },
-    async obtenerPrecioEnARS(opcion) {
+    async obtenerPrecioEnARS(criptoCode) {
       try {
-        const response = await axios.get(`https://criptoya.com/api/argenbtc/${opcion}/ars`);
-        return response.data.ask;
+        const response = await axios.get(`https://criptoya.com/api/argenbtc/${criptoCode}/ars`);
+
+        return response.data.totalBid;
       } catch (error) {
         console.error('Error al obtener el precio en ARS:', error);
         return 0;
@@ -105,6 +102,15 @@ export default {
           this.totales[criptoCode].dinero -= cantidad * precioEnARS;
         }
       }
+
+      for (const criptoCode in this.totales) {
+        const criptoInfo = this.totales[criptoCode]; 
+        if (criptoInfo.cantidad <= 0) {
+          criptoInfo.dinero = 0;
+          criptoInfo.cantidad = 0;
+        }
+      }
+
     },
     numeroConSeparadorDecimales(numero) {
       const opciones = { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 };

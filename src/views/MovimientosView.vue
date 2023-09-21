@@ -6,15 +6,13 @@
 
   <div class="row">
     <div class="col m12">
-      <div class="container" v-if="tamañoMovimientos">
+      <div class="container z-depth-2" v-if="tamañoMovimientos">
         <table class="highlight centered responsive-table">
           <thead>
             <tr class="colorThead white-text">
               <th>Criptomoneda</th>
               <th>Acción</th>
               <th>Fecha</th>
-              <th></th>
-              <th></th>
               <th></th>
             </tr>
           </thead>
@@ -24,13 +22,9 @@
               <td>{{ actionTxt(movimiento.action) }}</td>
               <td>{{ formatearFecha(movimiento.datetime) }}</td>
               <td>
-                <a class="waves-effect waves-light btn yellow" @click="mostrarInfo(movimiento)"><i class="material-icons">info_outline</i></a>
-              </td>
-              <td>
-                <a class="waves-effect waves-light btn red" @click="mostrarEliminar(movimiento)"><i class="material-icons">delete</i></a>
-              </td>
-              <td>
-                <a class="waves-effect waves-light btn lightblue" @click="mostrarModificar(movimiento)"><i class="material-icons">create</i></a>
+                <a class="waves-effect waves-light btn yellow botones" @click="mostrarInfo(movimiento)"><i class="material-icons">info_outline</i></a>
+                <a class="waves-effect waves-light btn lightblue botones" @click="mostrarModificar(movimiento)"><i class="material-icons">create</i></a>
+                <a class="waves-effect waves-light btn red botones" @click="mostrarEliminar(movimiento)"><i class="material-icons">delete</i></a>
               </td>
             </tr>
           </tbody>
@@ -105,8 +99,9 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { useUserStore } from '../store/user.js';
+import axios from 'axios';
+import apiClient from '../conexionAPI';
 import M from 'materialize-css';
 
 export default{
@@ -139,21 +134,17 @@ export default{
     cantidad: 'obtenerPrecioEnARS',
   },
   mounted(){
-    this.mostrarMovimientos();
+    this.obtenerMovimientos();
     M.Modal.init(document.querySelectorAll('.modal'), {});
   },
   methods: {
-    async mostrarMovimientos(){
+    async obtenerMovimientos(){
       let user_id = this.usuario
 
       try {
         this.cargando = true;
-        const response = await axios.get(`https://laboratorio3-5459.restdb.io/rest/transactions?q={"user_id": "${user_id}"}`, {
-        headers: {
-          'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
-          'Content-Type': 'application/json'
-        }
-      });
+        const response = await apiClient.get(`/transactions?q={"user_id": "${user_id}"}`)
+
         this.movimientos = response.data;
         //this.tamañoMovimientos = this.movimientos.length;
         
@@ -175,28 +166,22 @@ export default{
       M.toast({ html: mensaje, classes: `${color}` });
     },
     mostrarEliminar(movimiento) {
-      this.movimientoAEliminar = movimiento;
-      this.tipoMovimiento = this.actionTxt(movimiento.action);
-      M.Modal.getInstance(document.querySelector('#modal-eliminar')).open();
-    },
-    async eliminarMovimiento() {
       if (this.cargando) {
         this.mostrarToast('Espere un momento.', 'red accent-4');
         return;
       }
 
-      this.cargando = true;
-
+      this.movimientoAEliminar = movimiento;
+      this.tipoMovimiento = this.actionTxt(movimiento.action);
+      M.Modal.getInstance(document.querySelector('#modal-eliminar')).open();
+    },
+    async eliminarMovimiento() {
       M.Modal.getInstance(document.querySelector('#modal-eliminar')).close();
       try {
-        const response = await axios.delete(`https://laboratorio3-5459.restdb.io/rest/transactions/${this.movimientoAEliminar._id}`, {
-          headers: {
-            'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
-            'Content-Type': 'application/json',
-          },
-        });
+        this.cargando = true;
+        const response = await apiClient.delete(`/transactions/${this.movimientoAEliminar._id}`)
 
-       await this.mostrarMovimientos();
+       await this.obtenerMovimientos();
        this.mostrarToast('Registro eliminado correctamente!', 'green accent-4');
 
         console.log(response.data);
@@ -212,7 +197,15 @@ export default{
       try {
         if (this.criptoSeleccionada && this.cantidad > 0) {
           const response = await axios.get(`https://criptoya.com/api/argenbtc/${this.criptoSeleccionada}/ars`);
-          this.precioARS = response.data.ask * this.cantidad;
+
+          if (this.movimientoAModificar && this.movimientoAModificar.action === 'purchase') {
+            this.precioARS = response.data.totalAsk * this.cantidad;
+          } else if (this.movimientoAModificar && this.movimientoAModificar.action === 'sale') {
+            this.precioARS = response.data.totalBid * this.cantidad;
+          } else {
+            this.precioARS = 0;
+          }
+
         } else {
           this.precioARS = 0;
         }
@@ -238,17 +231,9 @@ export default{
       console.log(datosNuevos);
 
       try {
-        const response = await axios.patch(`https://laboratorio3-5459.restdb.io/rest/transactions/${this.movimientoAModificar._id}`,
-        datosNuevos,
-        {
-          headers: {
-            'x-apikey': '64a57c2b86d8c50fe6ed8fa5',
-            'Content-Type': 'application/json',          
-          }
-        });
+        await apiClient.patch(`/transactions/${this.movimientoAModificar._id}`, datosNuevos)
 
-        console.log(response.data);
-        this.mostrarMovimientos();
+        this.obtenerMovimientos();
         this.mostrarToast('Registro modificado correctamente!', 'green accent-4');
 
       } catch(error) {
@@ -259,6 +244,11 @@ export default{
       }
     },
     mostrarInfo(movimiento){
+      if (this.cargando) {
+        this.mostrarToast('Espere un momento.', 'red accent-4');
+        return;
+      }
+
       this.movimientoAMostrar = movimiento;
       M.Modal.getInstance(document.querySelector('#modal-info')).open();
     },
@@ -283,5 +273,9 @@ export default{
 <style scoped>
 .colorThead {
   background-color: #002CEB;
+}
+.botones{
+  margin: 5%;
+  margin-right: 10px;
 }
 </style>
