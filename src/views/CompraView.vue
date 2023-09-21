@@ -2,18 +2,18 @@
 <div class="container">
   <div class="row">
     <div class="col s6">
-      <div class="input-field custom-container">
-        <h1>Compra</h1>
-        <p class="black-text">Cripto:</p> 
-        <select class="input-field custom-select black-text" v-model="compraSeleccionada">
+      <div class="input-field custom-container z-depth-2">
+        <h1 class="black-text">Compra</h1>
+        <p class="balck-text">Cripto:</p> 
+        <select class="input-field" v-model="compraSeleccionada">
           <option value="" disabled="" selected="">Seleccione</option>
           <option v-for="(opcion, index) in opcionesCompra" :key="index" :value="opcion">{{ opcion }}</option>
         </select>
         <div>
           <p class="black-text">Cantidad:</p>
-          <input type="number" v-model="cantidad" min="1" step="1" class="input-field white"/>
+          <input type="number" v-model="cantidad" min="1" step="1" class="input-field"/>
         </div>
-        <div class="card blue-grey darken-1">
+        <div class="card z-depth-2">
           <div class="card-content white-text">
             <span class="card-title">Precio en ARS</span>
             <p> {{ numeroConSeparadorDecimales(precioARS) }}</p>
@@ -33,7 +33,8 @@
 <script>
 import TablaCriptomonedas from '../components/TablaCriptomonedas.vue';
 import { useUserStore } from '../store/user.js';
-import axios from 'axios';
+import axios from "axios";
+import apiClient from '../conexionAPI';
 import M from 'materialize-css';
 
 export default {
@@ -67,7 +68,7 @@ export default {
       try {
         if (this.compraSeleccionada && this.cantidad > 0) {
           const response = await axios.get(`https://criptoya.com/api/argenbtc/${this.compraSeleccionada}/ars`);
-          this.precioARS = response.data.ask * this.cantidad;
+          this.precioARS = response.data.totalAsk * this.cantidad;
         } else {
           this.precioARS = 0;
         }
@@ -94,12 +95,7 @@ export default {
         };
 
         try {
-          const response = await axios.post('https://laboratorio3-5459.restdb.io/rest/transactions', datos, {
-            headers: {
-              'x-apikey':'64a57c2b86d8c50fe6ed8fa5',
-              'Content-Type': 'application/json'
-            },
-          })
+          const response = await apiClient.post("/transactions", datos)
 
           if(response.status === 201){
             this.mostrarToast('¡Compra guardada correctamente!', 'green accent-4');
@@ -126,23 +122,6 @@ export default {
 
 
 <style scoped>
-.input-field input[type="number"] {
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 4px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.browser-default {
-  background-color: #ffb70c;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 4px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .custom-container {
   max-width: 600px;
   margin-left: 0px;
@@ -150,13 +129,14 @@ export default {
   padding: 20px;
   padding-top: 1px;
   border-radius: 5px;
-  background-color: gray;
+  background-color: #f0f2f5;
 }
 
-.custom-select {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-}
 .tabla {
   margin-top: 25px;
+}
+
+.card{
+  background-color: #002CEB;
 }
 </style>
