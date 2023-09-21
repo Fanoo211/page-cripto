@@ -22,9 +22,9 @@
               <td>{{ actionTxt(movimiento.action) }}</td>
               <td>{{ formatearFecha(movimiento.datetime) }}</td>
               <td>
-                <a class="waves-effect waves-light btn yellow botones" @click="mostrarInfo(movimiento)"><i class="material-icons">info_outline</i></a>
-                <a class="waves-effect waves-light btn lightblue botones" @click="mostrarModificar(movimiento)"><i class="material-icons">create</i></a>
-                <a class="waves-effect waves-light btn red botones" @click="mostrarEliminar(movimiento)"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-light btn yellow botones" @click="mostrarInfo(movimiento)" title="Mostrar Información"><i class="material-icons">info_outline</i></a>
+                <a class="waves-effect waves-light btn lightblue botones" @click="mostrarModificar(movimiento)" title="Modificar"><i class="material-icons">create</i></a>
+                <a class="waves-effect waves-light btn red botones" @click="mostrarEliminar(movimiento)" title="Eliminar"><i class="material-icons">delete</i></a>
               </td>
             </tr>
           </tbody>

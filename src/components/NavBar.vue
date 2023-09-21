@@ -31,7 +31,7 @@
         </div>
 
 
-        <router-link :to="{name: 'HomeView'}" class="brand-logo center">
+        <router-link :to="{name: 'HomeView'}" class="brand-logo center" title="Inicio">
           CriptoFano
           <img src="../assets/logoPage.png" alt="logoPage" class="logo-page left">
         </router-link>
