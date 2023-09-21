@@ -52,25 +52,24 @@
 
   <div id="modal-modificar" class="modal">
     <div class="container modal-content">
-      <div class="row">
-        <div class="input-field s6">
-          <h4>Modificar</h4>
-          <p class="black-text">Cripto:</p> 
-          <select class="browser-default custom-select" v-model="criptoSeleccionada">
-            <option value="" disabled="" selected="">Seleccione</option>
-            <option v-for="(opcion, index) in opcionesCripto" :key="index" :value="opcion">{{ opcion }}</option>
-          </select>
-        </div>
-        <div class="input-field s6">
+      <div class="input-field custom-container">
+        <h1 class="black-text">Modificar</h1>
+        <p class="balck-text">Cripto:</p> 
+        <select class="input-field" v-model="criptoSeleccionada">
+          <option value="" disabled="" selected="">Seleccione</option>
+          <option v-for="(opcion, index) in opcionesCripto" :key="index" :value="opcion">{{ opcion }}</option>
+        </select>
+        <div>
           <p class="black-text">Cantidad:</p>
-          <input type="number" v-model="cantidad" min="1" step="1" class="browser-default" style="width: 540px;"/>
+          <input type="number" v-model="cantidad" min="1" step="1" class="input-field"/>
         </div>
-      </div>
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">Precio en ARS</span>
-          <p> {{ numeroConSeparadorDecimales(precioARS) }}</p>
+        <div class="card z-depth-2">
+          <div class="card-content white-text">
+            <span class="card-title">Precio en ARS</span>
+            <p> {{ numeroConSeparadorDecimales(precioARS) }}</p>
+          </div>
         </div>
+        <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
       </div>
     </div>
     <div class="modal-footer">
@@ -85,7 +84,7 @@
         <h1>{{ actionTxt(movimientoAMostrar.action) }}</h1>
         <p>Usuario: {{ movimientoAMostrar.user_id }}</p>
         <p>Criptomoneda: {{ movimientoAMostrar.crypto_code.toUpperCase() }}</p>
-        <p>Cantidad: {{ movimientoAMostrar.crypto_amount }}</p>
+        <p>Cantidad: {{ parseFloat(movimientoAMostrar.crypto_amount) % 1 === 0 ? parseFloat(movimientoAMostrar.crypto_amount) : parseFloat(movimientoAMostrar.crypto_amount).toFixed(1) }}</p>
         <p>Precio Total (ARS): {{ numeroConSeparadorDecimales(parseFloat(movimientoAMostrar.money)) }}</p>
         <p>Fecha: {{ formatearFecha(movimientoAMostrar.datetime) }}</p>
       </div>
@@ -136,6 +135,7 @@ export default{
   mounted(){
     this.obtenerMovimientos();
     M.Modal.init(document.querySelectorAll('.modal'), {});
+    M.FormSelect.init(document.querySelectorAll('select'), {});
   },
   methods: {
     async obtenerMovimientos(){
@@ -277,5 +277,17 @@ export default{
 .botones{
   margin: 5%;
   margin-right: 10px;
+}
+.custom-container {
+  max-width: 600px;
+  margin-left: 0px;
+  margin-top: 25px;
+  padding: 20px;
+  padding-top: 1px;
+  border-radius: 5px;
+  background-color: #f0f2f5;
+}
+.card{
+  background-color: #002CEB;
 }
 </style>

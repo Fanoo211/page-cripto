@@ -2,7 +2,8 @@
 <div>
   <div class="row">
 
-    <div class="col s12 m5 l5" style="margin-top: 40px;">
+    <div class="col s12 m5 l5" >
+      <h2 style="margin-top: 110px">Inicio de Sesión</h2>
       <div class="card">
         <div class="card-content fondo">
           <form @submit.prevent="iniciarSesion">
