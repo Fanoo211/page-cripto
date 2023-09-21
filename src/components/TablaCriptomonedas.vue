@@ -1,16 +1,18 @@
 <template>
     <div>
-      <table class="striped centered responsive-table tabla">
+      <table class="striped centered responsive-table tabla z-depth-2">
         <thead class="theadColor">
           <tr>
             <th>Criptomoneda</th>
-            <th>Valor Unitario (ARS)</th>
+            <th>Valor de Compra (ARS)</th>
+            <th>Valor de Venta (ARS)</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(opcion, index) in opcionesCripto" :key="index">
             <td>{{ opcion.toUpperCase() }}</td>
-            <td v-if="typeof valorCripto[index] === 'number'"> {{ numeroConSeparadorDecimales(valorCripto[index]) }}</td>
+            <td v-if="typeof valorCompra[index] === 'number'"> {{ numeroConSeparadorDecimales(valorCompra[index]) }}</td>
+            <td v-if="typeof valorVenta[index] === 'number'"> {{ numeroConSeparadorDecimales(valorVenta[index]) }}</td>
           </tr>
         </tbody>
       </table>
@@ -25,7 +27,8 @@ export default {
   data(){
     return{
       opcionesCripto: ['btc' , 'dai' , 'eth' , 'usdt'],
-      valorCripto: [],
+      valorCompra: [],
+      valorVenta: [],
     }
   },
   mounted(){
@@ -36,7 +39,8 @@ export default {
       try {
         for(let opcion of this.opcionesCripto){
           const response = await axios.get(`https://criptoya.com/api/argenbtc/${opcion}/ars`);
-          this.valorCripto.push(response.data.ask);
+          this.valorCompra.push(response.data.totalAsk);
+          this.valorVenta.push(response.data.totalBid);
         }
       } catch (error) {
         console.error('Error al obtener el precio en ARS:', error);
