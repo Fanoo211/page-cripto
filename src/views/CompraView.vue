@@ -99,7 +99,7 @@ export default {
 
           if(response.status === 201){
             this.mostrarToast('¡Compra guardada correctamente!', 'green accent-4');
-            console.log(datos);
+            //console.log(datos);
           }
             
         } catch (error) {

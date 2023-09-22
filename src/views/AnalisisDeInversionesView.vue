@@ -94,17 +94,10 @@ export default {
             if(movimiento.action == 'purchase'){
               sumaCantidad += parseFloat(movimiento.crypto_amount);
               sumaDinero += parseFloat(movimiento.money);
-              if(cripto == 'btc'){
-                console.log('COMPRA: ',movimiento.money)
-              }
-              
             }
             else if(movimiento.action == 'sale'){
               sumaCantidad -= parseFloat(movimiento.crypto_amount);
               sumaDinero -= parseFloat(movimiento.money);
-              if(cripto == 'btc'){
-                console.log('VENTA: ',movimiento.money)
-              }
             }
           }
         }

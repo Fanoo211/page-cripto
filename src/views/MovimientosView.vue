@@ -177,12 +177,11 @@ export default{
       M.Modal.getInstance(document.querySelector('#modal-eliminar')).close();
       try {
         this.cargando = true;
-        const response = await apiClient.delete(`/transactions/${this.movimientoAEliminar._id}`)
+        await apiClient.delete(`/transactions/${this.movimientoAEliminar._id}`)
 
        await this.obtenerMovimientos();
        this.mostrarToast('Registro eliminado correctamente!', 'green accent-4');
 
-        console.log(response.data);
       } catch (error) {
         console.error('Error al eliminar el movimiento:', error);
         this.mostrarToast('Error al eliminar el movimiento.', 'red accent-4');
@@ -226,7 +225,7 @@ export default{
         money: this.precioARS.toFixed(2),
       };
 
-      console.log(datosNuevos);
+      //console.log(datosNuevos);
 
       try {
         await apiClient.patch(`/transactions/${this.movimientoAModificar._id}`, datosNuevos)
