@@ -1,6 +1,6 @@
 <template>
     <div>
-      <table class="striped centered responsive-table tabla z-depth-2">
+      <table class="striped centered tabla z-depth-2">
         <thead class="theadColor">
           <tr>
             <th>Criptomoneda</th>

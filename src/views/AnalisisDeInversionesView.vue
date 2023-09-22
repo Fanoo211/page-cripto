@@ -3,7 +3,7 @@
     <h1>Análisis de Inversiones</h1>
 
     <div class="container z-depth-2" v-if="tamañoMovimientos">
-      <table class="highlight centered responsive-table" v-if="!cargando">
+      <table class="highlight centered" v-if="!cargando">
         <thead class="colorThead white-text">
           <tr>
             <th>Criptomoneda</th>

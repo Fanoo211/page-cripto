@@ -5,9 +5,8 @@
   </div>
 
   <div class="row">
-    <div class="col m12">
       <div class="container z-depth-2" v-if="tamañoMovimientos">
-        <table class="highlight centered responsive-table">
+        <table class="highlight centered">
           <thead>
             <tr class="colorThead white-text">
               <th>Criptomoneda</th>
@@ -36,7 +35,6 @@
       <div v-if="cargando" class="center-align">
         <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
       </div>
-    </div>
   </div>
 
   <div id="modal-eliminar" class="modal">

@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="row">
-    <div class="col s6">
+    <div class="col s12 m6 l6">
       <div class="input-field custom-container z-depth-2">
         <h1 class="black-text">Venta</h1>  
         <p class="black-text">Cripto:</p> 
@@ -22,7 +22,7 @@
         <button class="waves-effect waves-light btn yellow darken-3" @click="vender">Vender</button>
       </div>
     </div>
-    <div class="col s6 tabla">
+    <div class="col s12 m6 l6 tabla">
       <TablaCriptomonedas />
     </div>
   </div>
