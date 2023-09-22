@@ -27,7 +27,6 @@
     
   </div>
 
-   <!-- Footer de inicio de sesión -->
   <div class="row">
     <div class="col s12 center-align">
       <p class="white-text">.</p>
