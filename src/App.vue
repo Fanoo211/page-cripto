@@ -47,6 +47,8 @@ export default {
     sesionIniciada(usuario) {
       if (!usuario.trim()) {
         this.mostrarToast('Por favor, ingrese un usuario válido.', 'blue darken-1');
+      } else if (usuario.includes(" ")) {
+        this.mostrarToast('El usuario no debe contener espacios en blanco.', 'blue darken-1');
       } else {
         let tieneLetras = false;
         let tieneNumeros = false;
