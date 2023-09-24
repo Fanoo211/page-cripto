@@ -3,7 +3,7 @@
     <h1>Estado Actual de Criptomonedas</h1>
 
     <div class="container z-depth-2" v-if="tamañoMovimientos">
-      <table class="highlight centered">
+      <table class="highlight centered" v-if="!cargando">
         <thead class="colorThead white-text">
           <tr>
             <th>Criptomoneda</th>

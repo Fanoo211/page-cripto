@@ -74,6 +74,7 @@ export default{
     cerrarSesion() {
       const userStore = useUserStore();
       userStore.logout();
+      this.$router.push({ name: 'LoginView' });
       this.mostrarToast('¡SESIÓN CERRADA!', 'red accent-4');
       this.cerrarSidenav();
     },
