@@ -1,6 +1,6 @@
 <template>
     <div>
-      <table class="striped centered tabla z-depth-2">
+      <table class="striped centered tabla z-depth-2" v-if="!cargando">
         <thead class="theadColor">
           <tr>
             <th>Criptomoneda</th>
@@ -17,6 +17,10 @@
         </tbody>
       </table>
     </div>
+
+    <div v-if="cargando" class="center-align">
+      <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
+    </div>
 </template>
 
 <script>
@@ -29,6 +33,7 @@ export default {
       opcionesCripto: ['btc' , 'dai' , 'eth' , 'usdt'],
       valorCompra: [],
       valorVenta: [],
+      cargando: false,
     }
   },
   mounted(){
@@ -37,6 +42,7 @@ export default {
   methods: {
     async obtenerPrecioEnARS() {
       try {
+        this.cargando = true;
         for(let opcion of this.opcionesCripto){
           const response = await axios.get(`https://criptoya.com/api/argenbtc/${opcion}/ars`);
           this.valorCompra.push(response.data.totalAsk);
@@ -44,6 +50,8 @@ export default {
         }
       } catch (error) {
         console.error('Error al obtener el precio en ARS:', error);
+      } finally {
+        this.cargando = false;
       }
     },
     numeroConSeparadorDecimales(numero) {
