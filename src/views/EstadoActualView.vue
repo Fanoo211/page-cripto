@@ -1,32 +1,37 @@
 <template>
   <div>
-    <h1>Estado Actual de Criptomonedas</h1>
-
-    <div class="container z-depth-2" v-if="tamañoMovimientos">
-      <table class="highlight centered" v-if="!cargando">
-        <thead class="colorThead white-text">
-          <tr>
-            <th>Criptomoneda</th>
-            <th>Total Criptomonedas</th>
-            <th>Valor Actual (ARS)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(total, criptoCode) in totales" :key="criptoCode">
-            <td>{{ criptoCode }}</td>
-            <td>{{ total.cantidad % 1 === 0 ? total.cantidad : total.cantidad.toFixed(1) }}</td>
-            <td> {{ numeroConSeparadorDecimales(total.dinero) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="container" v-else>
-      <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
+    <div class="title">
+      <h1>Estado Actual de Criptomonedas</h1>
     </div>
 
-    <div v-if="cargando" class="center-align">
-      <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
+    <div class="row">
+      <div class="container z-depth-2" v-if="tamañoMovimientos">
+        <table class="highlight centered" v-if="!cargando">
+          <thead class="colorThead white-text">
+            <tr>
+              <th>Criptomoneda</th>
+              <th>Total Criptomonedas</th>
+              <th>Valor Actual (ARS)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(total, criptoCode) in totales" :key="criptoCode">
+              <td>{{ criptoCode }}</td>
+              <td>{{ total.cantidad % 1 === 0 ? total.cantidad : total.cantidad.toFixed(1) }}</td>
+              <td> {{ numeroConSeparadorDecimales(total.dinero) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="container" v-else>
+        <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
+      </div>
+
+      <div v-if="cargando" class="center-align">
+        <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
+      </div>
     </div>
+
 
   </div>
 </template>

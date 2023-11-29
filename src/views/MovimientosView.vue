@@ -5,36 +5,36 @@
   </div>
 
   <div class="row">
-      <div class="container z-depth-2" v-if="tamañoMovimientos">
-        <table class="highlight centered">
-          <thead>
-            <tr class="colorThead white-text">
-              <th>Criptomoneda</th>
-              <th>Acción</th>
-              <th>Fecha</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(movimiento, index) in movimientos" :key="index">
-              <td>{{ movimiento.crypto_code.toUpperCase() }}</td>
-              <td>{{ actionTxt(movimiento.action) }}</td>
-              <td>{{ formatearFecha(movimiento.datetime) }}</td>
-              <td>
-                <a class="waves-effect waves-light btn yellow botones" @click="mostrarInfo(movimiento)" title="Mostrar Información"><i class="material-icons">info_outline</i></a>
-                <a class="waves-effect waves-light btn lightblue botones" @click="mostrarModificar(movimiento)" title="Modificar"><i class="material-icons">create</i></a>
-                <a class="waves-effect waves-light btn red botones" @click="mostrarEliminar(movimiento)" title="Eliminar"><i class="material-icons">delete</i></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="container" v-else>
-        <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
-      </div>
-      <div v-if="cargando" class="center-align">
-        <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
-      </div>
+    <div class="container z-depth-2" v-if="tamañoMovimientos">
+      <table class="highlight centered">
+        <thead>
+          <tr class="colorThead white-text">
+            <th>Criptomoneda</th>
+            <th>Acción</th>
+            <th>Fecha</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(movimiento, index) in movimientos" :key="index">
+            <td>{{ movimiento.crypto_code.toUpperCase() }}</td>
+            <td>{{ actionTxt(movimiento.action) }}</td>
+            <td>{{ formatearFecha(movimiento.datetime) }}</td>
+            <td>
+              <a class="waves-effect waves-light btn yellow botones" @click="mostrarInfo(movimiento)" title="Mostrar Información"><i class="material-icons">info_outline</i></a>
+              <a class="waves-effect waves-light btn lightblue botones" @click="mostrarModificar(movimiento)" title="Modificar"><i class="material-icons">create</i></a>
+              <a class="waves-effect waves-light btn red botones" @click="mostrarEliminar(movimiento)" title="Eliminar"><i class="material-icons">delete</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container" v-else>
+      <p v-if="!cargando">Todavía no ha realizado ningún movimiento!</p>
+    </div>
+    <div v-if="cargando" class="center-align">
+      <p class="animate__animated animate__fadeIn animate__repeat-3">Cargando...</p>
+    </div>
   </div>
 
   <div id="modal-eliminar" class="modal">
@@ -67,7 +67,6 @@
             <p> {{ numeroConSeparadorDecimales(precioARS) }}</p>
           </div>
         </div>
-        <button class="waves-effect waves-light btn yellow darken-3" @click="comprar">Comprar</button>
       </div>
     </div>
     <div class="modal-footer">
